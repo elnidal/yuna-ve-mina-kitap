@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yuna ve Mina: OPTCAS'ın Sırrı</title>
+<style>
+  :root{--ink:#3a2f4a;--card:#fffaf0;--blue:#4fc3f7;--pink:#ff8fb1}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px;
+    font-family:"Chalkboard SE","Comic Sans MS","Trebuchet MS",sans-serif;color:var(--ink);
+    background:linear-gradient(#25396b,#15213d)}
+  .book{width:100%;max-width:680px;background:var(--card);border-radius:24px;padding:16px;
+    box-shadow:0 12px 40px rgba(0,0,0,.45);border:6px solid #ffd27a}
+  h1{margin:4px 0 10px;text-align:center;font-size:1.3rem;color:#6a4fb3}
+  svg#scene{width:100%;height:auto;border-radius:16px;display:block;background:#123;touch-action:manipulation}
+  [data-act]{cursor:pointer}
+  #text{font-size:1.2rem;line-height:1.55;margin:14px 6px 6px;min-height:6.5em}
+  #hint{text-align:center;color:#d6428a;font-weight:bold;min-height:1.4em;animation:bob 1.2s infinite}
+  @keyframes bob{50%{transform:translateY(-4px)}}
+  .choices{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+  button{font:inherit;border:0;border-radius:999px;padding:10px 18px;background:var(--blue);color:#fff;font-weight:bold;
+    cursor:pointer;box-shadow:0 3px 0 #2a8fbf}
+  button:active{transform:translateY(2px);box-shadow:0 1px 0 #2a8fbf}
+  button.ch{background:#ffb74d;box-shadow:0 3px 0 #d58a1f}
+  button:disabled{opacity:.35;cursor:not-allowed}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+  #dots{display:flex;gap:6px}
+  #dots i{width:10px;height:10px;border-radius:50%;background:#ddd}
+  #dots i.on{background:var(--pink)}
+  #snd{position:fixed;top:12px;right:12px;padding:8px 12px;background:#fff;color:#333;box-shadow:none}
+  .heart{font-size:22px;pointer-events:none;animation:up 1.4s ease-out forwards}
+  @keyframes up{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-70px)}}
+  .tw{animation:tw 2s infinite}
+  .ffly{animation:ffd 4s ease-in-out infinite}
+  @keyframes ffd{0%{transform:translate(0,0)}25%{transform:translate(5px,-6px)}50%{transform:translate(-4px,-10px)}75%{transform:translate(-6px,-3px)}100%{transform:translate(0,0)}}
+  .ffg{animation:ffb 2.2s ease-in-out infinite}
+  @keyframes ffb{0%,100%{opacity:.25}50%{opacity:1}}
+  .ffa{animation:ffa 2.2s ease-in-out infinite}
+  @keyframes ffa{0%,100%{fill:#7d8a36}50%{fill:#eaff6a}}
+  .ffw{animation:ffw .1s infinite alternate;transform-box:fill-box;transform-origin:center bottom}
+  @keyframes ffw{to{transform:scaleY(.55)}}
+  .on .ffg{animation:none;opacity:1}
+  .on .ffa{animation:none;fill:#fffde0}
+  .fl{animation:fl 3s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-4px)}}
+  .pu{animation:pu 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pu{50%{opacity:.5;transform:scale(1.12)}}
+  @keyframes tw{50%{opacity:.35}}
+</style>
+</head>
+<body>
+<button id="snd" title="Ses aç/kapat">🔊</button>
+
+<!-- ortak çizim araçları -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <radialGradient id="ffGlow"><stop offset="0" stop-color="#f4ff9a" stop-opacity=".95"/><stop offset=".3" stop-color="#c8ff4a" stop-opacity=".5"/><stop offset="1" stop-color="#b6ff3a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="aura"><stop offset="0" stop-color="#bff3ff" stop-opacity=".85"/><stop offset=".35" stop-color="#5fc8ff" stop-opacity=".4"/><stop offset="1" stop-color="#5fc8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="iris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173f8a"/><stop offset=".55" stop-color="#3fb3f0"/><stop offset="1" stop-color="#c4f4ff"/></linearGradient>
+    <linearGradient id="hairD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0b10"/><stop offset="1" stop-color="#2b2b36"/></linearGradient>
+    <linearGradient id="hairN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12101a"/><stop offset="1" stop-color="#2f2b4a"/></linearGradient>
+    <linearGradient id="gem" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e1f8ff"/><stop offset=".5" stop-color="#4fc3f7"/><stop offset="1" stop-color="#1e88e5"/></linearGradient>
+  </defs>
+</svg>
+
+<main class="book">
+  <h1>✨ Yuna ve Mina: OPTCAS'ın Sırrı ✨</h1>
+  <svg id="scene" viewBox="0 0 400 260"></svg>
+  <div id="hint"></div>
+  <div id="text"></div>
+  <div id="extra" class="choices"></div>
+  <div class="nav">
+    <button id="back">◀ Geri</button>
+    <div id="dots"></div>
+    <button id="next">İleri ▶</button>
+  </div>
+</main>
+
+<script>
+/* ---------- SES (hepsi tarayıcıda üretilir) ---------- */
+let ac, musicOn = true, musicTimer = null;
+function A(){ if(!ac) ac = new (window.AudioContext||window.webkitAudioContext)(); if(ac.state==='suspended') ac.resume(); return ac; }
+function tone(f,d=.3,type='sine',v=.15,t0=0,f2){
+  if(!musicOn) return;
+  const a=A(), o=a.createOscillator(), g=a.createGain(), t=a.currentTime+t0;
+  o.type=type; o.frequency.setValueAtTime(f,t);
+  if(f2) o.frequency.exponentialRampToValueAtTime(f2,t+d);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(v,t+.03); g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t+d+.05);
+}
+const chime = () => { tone(880,.4,'sine',.15); tone(1320,.5,'sine',.1,.12); };
+const meow  = () => { tone(520,.35,'triangle',.22,0,820); tone(820,.3,'triangle',.2,.3,430); };
+const howl  = () => { tone(300,1.3,'sawtooth',.05,0,620); tone(450,1.1,'sine',.1,.1,700); tone(700,.8,'sine',.06,1,420); };
+const pop   = () => tone(660,.15,'square',.07,0,990);
+function startMusic(){
+  if(musicTimer) return;
+  const pent=[262,294,330,392,440,523,392,330];
+  let k=0;
+  musicTimer=setInterval(()=>{ tone(pent[k%pent.length],1.4,'sine',.045); if(k%4===0) tone(131,2,'sine',.05); k+= (Math.random()<.5?1:2); },650);
+}
+document.getElementById('snd').onclick = e => {
+  musicOn=!musicOn; e.target.textContent = musicOn?'🔊':'🔇'; if(musicOn) startMusic();
+};
+
+/* ---------- KARAKTERLER ---------- */
+const aEye=(x,fl)=>`<ellipse cx="${x}" cy="-128" rx="6" ry="7.6" fill="#fff"/>
+  <ellipse cx="${x}" cy="-127.4" rx="5.3" ry="7" fill="url(#iris)"/>
+  <ellipse cx="${x}" cy="-127" rx="2.3" ry="3.4" fill="#0d1b2e"/>
+  <ellipse cx="${x+2.2}" cy="-131" rx="2.2" ry="2.5" fill="#fff"/><circle cx="${x-2}" cy="-123" r="1.2" fill="#fff" opacity=".9"/>
+  <path d="M${x-6.6} -131.4 Q${x} -138.8 ${x+6.6} -131.4" stroke="#14121c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M${x+6*fl} -132 l${3*fl} -2.6" stroke="#14121c" stroke-width="1.6" stroke-linecap="round"/>`;
+const aFace=`<rect x="-3.5" y="-112" width="7" height="12" fill="#f4cdb8"/>
+  <path d="M-16 -131 Q-17 -114 -7 -108 Q0 -105 7 -108 Q17 -114 16 -131 Q15 -150 0 -150 Q-15 -150 -16 -131Z" fill="#ffe6d5"/>
+  <ellipse cx="-10.5" cy="-115" rx="4" ry="2.4" fill="#ff9fb0" opacity=".5"/><ellipse cx="10.5" cy="-115" rx="4" ry="2.4" fill="#ff9fb0" opacity=".5"/>`;
+/* macera kıyafeti: tunik, kemer, kısa etek, bot */
+const outfitBody=(top,trim,skirt,fold,boot,belt='#8d5a3c',gem=false)=>`
+  <rect x="-9" y="-40" width="7" height="20" fill="#ffe6d5"/><rect x="2" y="-40" width="7" height="20" fill="#ffe6d5"/>
+  <path d="M-10 -26 L-1 -26 L-1 -6 Q-1 -1 -6 -1 L-13 -1 Q-14 -8 -10 -26Z" fill="${boot}"/><path d="M1 -26 L10 -26 Q14 -8 13 -1 L6 -1 Q1 -1 1 -6Z" fill="${boot}"/>
+  <path d="M-11 -26 L0 -26 M1 -26 L11 -26" stroke="${trim}" stroke-width="3"/>
+  <path d="M-16 -62 L16 -62 L25 -34 L-25 -34Z" fill="${skirt}"/>
+  <path d="M-8 -62 L-12 -34 M0 -62 L0 -34 M8 -62 L12 -34" stroke="${fold}" stroke-width="1.2"/>
+  <path d="M-25 -34 L25 -34" stroke="${trim}" stroke-width="2.4"/>
+  <path d="M-15 -103 L15 -103 L17 -60 L-17 -60Z" fill="${top}"/>
+  <path d="M-7 -103 L0 -90 L7 -103" stroke="${trim}" stroke-width="3" fill="none" stroke-linejoin="round"/>
+  <rect x="-17.5" y="-66" width="35" height="6" fill="${belt}"/><rect x="-3.5" y="-67" width="7" height="8" rx="1.5" fill="#ffd54f"/>${gem?'<circle cx="0" cy="-63" r="1.9" fill="#4fc3f7"/>':''}`;
+const outfitSleeve=(m,top,trim)=>`<path d="M${m*14} -92 Q${m*24} -78 ${m*22} -64" stroke="#ffe6d5" stroke-width="5.5" fill="none" stroke-linecap="round"/><path d="M${m*13} -102 Q${m*27} -100 ${m*26} -84 Q${m*19} -80 ${m*14} -88Z" fill="${top}"/><path d="M${m*26} -84 Q${m*19} -80 ${m*14} -88" stroke="${trim}" stroke-width="2.6" fill="none"/>`;
+const yunaSvg=(x,y,s=1)=>`<g transform="translate(${x},${y}) scale(${s*1.2})">
+  <path d="M-19 -135 Q-27 -159 0 -161 Q27 -159 19 -135 Q28 -100 23 -64 Q15 -56 11 -70 L9 -108 L-9 -108 L-11 -70 Q-15 -56 -23 -64 Q-28 -100 -19 -135Z" fill="url(#hairD)"/>
+  ${outfitBody('#eef2f8','#ffd54f','#9aa7bd','#7a879e','#6f7c93','#7a879e',true)}
+  ${outfitSleeve(-1,'#eef2f8','#ffd54f')}${outfitSleeve(1,'#eef2f8','#ffd54f')}
+  <circle cx="-24" cy="-60" r="3.6" fill="#ffe6d5"/><circle cx="24" cy="-60" r="3.6" fill="#ffe6d5"/>
+  ${aFace}${aEye(-8.5,-1)}${aEye(8.5,1)}
+  <path d="M-13 -140 Q-9 -142 -4 -140 M4 -140 Q9 -142 13 -140" stroke="#4a3a5a" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+  <path d="M-3.6 -112 Q0 -108.4 3.6 -112" stroke="#c0525f" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M-18 -132 Q-20 -158 0 -157 Q20 -158 18 -132 Q15 -146 8 -149 Q6 -139 1 -147 Q-4 -139 -8 -149 Q-15 -146 -18 -132Z" fill="url(#hairD)"/>
+  <path d="M-18 -132 L-21 -96 Q-17 -92 -14 -100 L-14 -128Z M18 -132 L21 -96 Q17 -92 14 -100 L14 -128Z" fill="url(#hairD)"/>
+  <path d="M-12 -150 Q-10.2 -151.2 -8.32 -152" stroke="#9aa7bd" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M-8.32 -152 Q-6.4 -152.8 -4.48 -153.2" stroke="#ffd54f" stroke-width="3.2" fill="none"/><path d="M-4.48 -153.2 Q-2.5 -153.7 -.48 -153.6" stroke="#ffffff" stroke-width="3.2" fill="none"/><path d="M-.48 -153.6 Q1.6 -153.6 3.68 -153.2" stroke="#4fc3f7" stroke-width="3.2" fill="none"/><path d="M3.68 -153.2 Q5.9 -152.8 8 -152" stroke="#9aa7bd" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+  <g transform="translate(-12,-148) scale(.72)"><g fill="#fff" stroke="#cfd6e4" stroke-width=".4"><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(0)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(36)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(72)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(108)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(144)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(180)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(216)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(252)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(288)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(324)"/></g><circle r="2.3" fill="#ffc400"/><circle cx="-.6" cy="-.6" r=".8" fill="#ffe27a"/></g>
+</g>`;
+const nohaSvg=(x,y,s=1,sad=true,tat=true)=>`<g transform="translate(${x},${y}) scale(${s*1.2})">
+  <path d="M-19 -133 Q-25 -162 0 -160 Q25 -162 19 -133 Q31 -96 25 -56 Q16 -48 12 -64 L10 -108 L-10 -108 L-12 -64 Q-16 -48 -25 -56 Q-31 -96 -19 -133Z" fill="url(#hairN)"/>
+  ${outfitBody('#b79cf2','#5b3fa8','#2b2f4a','#1c2036','#4a3a3a')}
+  ${outfitSleeve(-1,'#b79cf2','#5b3fa8')}
+  <circle cx="-24" cy="-60" r="3.8" fill="#ffe6d5"/>
+  <path d="M17 -101 Q31 -94 29 -78" stroke="#b79cf2" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M29 -78 Q34 -92 24 -100" stroke="#ffe6d5" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="23" cy="-101" r="3.8" fill="#ffe6d5"/>
+  <path d="M24 -81 L34 -79" stroke="#5b3fa8" stroke-width="3.4" stroke-linecap="round"/>
+  <g data-act="tattoo">
+    <circle cx="31.5" cy="-91" r="14" fill="transparent"/>
+    ${tat?'<g><circle cx="31.5" cy="-91" r="4.2" fill="#5c3a6b"/><path d="M28 -93.5 L28.6 -99 L31 -95.5Z M35 -93.5 L34.4 -99 L32 -95.5Z" fill="#5c3a6b"/><circle cx="30" cy="-91.5" r=".8" fill="#fff"/><circle cx="33" cy="-91.5" r=".8" fill="#fff"/></g>':'<circle cx="31.5" cy="-91" r="9" fill="none" stroke="#ffd54f" stroke-width="2" stroke-dasharray="3 3" class="tw"/>'}
+  </g>
+  ${aFace}${aEye(-8.5,-1)}${aEye(8.5,1)}
+  ${sad?'<path d="M-13 -136.5 L-4 -141 M13 -136.5 L4 -141" stroke="#1d1b26" stroke-width="1.8" stroke-linecap="round"/><path d="M-12 -120 q-1.5 7 1 11" stroke="#6ec6ff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M-3 -111 Q0 -114 3 -111" stroke="#a0525f" stroke-width="1.8" fill="none" stroke-linecap="round"/>':'<path d="M-13 -139 Q-9 -142 -4 -140 M4 -140 Q9 -142 13 -139" stroke="#1d1b26" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M-4 -113 Q0 -108 4 -113" stroke="#a0525f" stroke-width="1.8" fill="none" stroke-linecap="round"/>'}
+  <path d="M-18 -131 Q-21 -159 0 -157 Q21 -159 18 -131 Q14 -141 6 -144 Q0 -139 -6 -144 Q-14 -141 -18 -131Z" fill="url(#hairN)"/>
+  <path d="M-18 -131 L-22 -80 Q-17 -76 -14 -88 L-14 -128Z M18 -131 L22 -80 Q17 -76 14 -88 L14 -128Z" fill="url(#hairN)"/>
+  <path transform="translate(13,-148)" d="M0 -4 L1.2 -1.2 L4 0 L1.2 1.2 L0 4 L-1.2 1.2 L-4 0 L-1.2 -1.2Z" fill="#9b6bf2"/>
+  <path d="M-12 -150 Q-7.5 -153 -2.5 -153.5" stroke="#9b6bf2" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M-2.5 -153.5 Q2.5 -154 8 -152" stroke="#4fc3f7" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+</g>`;
+const wolf=(x,y,s=1,c='#8d98a8',sad=false)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <path d="M18 38 Q46 40 40 12 Q36 28 18 28Z" fill="${c}"/>
+  <ellipse cx="0" cy="32" rx="22" ry="20" fill="${c}"/><ellipse cx="0" cy="38" rx="11" ry="13" fill="#f1f3f6"/>
+  <polygon points="-21,-10 -17,-36 -4,-18" fill="${c}"/><polygon points="21,-10 17,-36 4,-18" fill="${c}"/>
+  <polygon points="-17,-14 -15,-28 -8,-18" fill="#ffb3c1"/><polygon points="17,-14 15,-28 8,-18" fill="#ffb3c1"/>
+  <circle cx="0" cy="0" r="23" fill="${c}"/><ellipse cx="0" cy="9" rx="12" ry="9" fill="#f1f3f6"/>
+  <ellipse cx="0" cy="4" rx="4.5" ry="3.2" fill="#2b2b36"/>
+  <ellipse cx="-10" cy="-4" rx="5.4" ry="6.4" fill="#ffb300"/><ellipse cx="10" cy="-4" rx="5.4" ry="6.4" fill="#ffb300"/>
+  <ellipse cx="-10" cy="-3" rx="2.4" ry="3.8" fill="#222"/><ellipse cx="10" cy="-3" rx="2.4" ry="3.8" fill="#222"/>
+  <circle cx="-8.4" cy="-6.6" r="2.1" fill="#fff"/><circle cx="11.6" cy="-6.6" r="2.1" fill="#fff"/><circle cx="-11.5" cy="0" r="1" fill="#fff"/><circle cx="8.5" cy="0" r="1" fill="#fff"/>
+  <path d="M-5 14 Q0 ${sad?12:18} 5 14" stroke="#555" fill="none" stroke-width="1.6" stroke-linecap="round"/>
+</g>`;
+const minaSvg=(x,y,s=1,sad=false,c='#9aa7bd',lt='#eef2f8',t=1,w=1)=>`<g transform="translate(${x},${y}) scale(${s*w},${s*t})">
+  <path d="M16 46 Q58 54 52 4 Q47 30 20 38Z" fill="${c}"/><path d="M52 4 Q56 26 45 38 Q50 22 52 4Z" fill="${lt}"/>
+  <ellipse cx="0" cy="36" rx="19" ry="21" fill="${c}"/>
+  <ellipse cx="0" cy="40" rx="10" ry="16" fill="${lt}"/>
+  <rect x="-10" y="48" width="7" height="10" rx="3" fill="${lt}"/><rect x="3" y="48" width="7" height="10" rx="3" fill="${lt}"/>
+  <ellipse cx="-6.5" cy="58" rx="6.2" ry="2.8" fill="#dde3ee"/><ellipse cx="6.5" cy="58" rx="6.2" ry="2.8" fill="#dde3ee"/>
+  <path d="M-17 17 L-12 30 L-7 21 L-3 34 L0 22 L3 34 L7 21 L12 30 L17 17Z" fill="${lt}"/>
+  <path d="M-13 22 Q0 31 13 22" stroke="#ffd54f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="0" cy="28" r="3.4" fill="#4fc3f7" stroke="#e8fbff" stroke-width=".8"/>
+  <polygon points="-19,-9 -15,-41 -3,-17" fill="${c}"/><polygon points="19,-9 15,-41 3,-17" fill="${c}"/>
+  <polygon points="-16,-14 -14,-32 -7,-18" fill="#f2b8c6"/><polygon points="16,-14 14,-32 7,-18" fill="#f2b8c6"/>
+  <circle cx="0" cy="-2" r="21" fill="${c}"/>
+  <path d="M-14 -14 Q0 -22 14 -14" stroke="#c3cddd" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+  <ellipse cx="0" cy="8" rx="10" ry="8" fill="${lt}"/><ellipse cx="0" cy="3" rx="4" ry="3" fill="#2b2b36"/>
+  <path d="M0 6 L0 11" stroke="#6b7385" stroke-width="1.2"/>
+  <ellipse cx="-9.5" cy="-4" rx="5.4" ry="6.2" fill="#ffb300"/><ellipse cx="9.5" cy="-4" rx="5.4" ry="6.2" fill="#ffb300"/>
+  <ellipse cx="-9.5" cy="-3" rx="2.4" ry="4" fill="#222"/><ellipse cx="9.5" cy="-3" rx="2.4" ry="4" fill="#222"/>
+  <circle cx="-8" cy="-6.6" r="2.1" fill="#fff"/><circle cx="11" cy="-6.6" r="2.1" fill="#fff"/><circle cx="-11" cy="0" r="1" fill="#fff"/><circle cx="8" cy="0" r="1" fill="#fff"/>
+  <path d="M-15.5 -7 Q-9.5 -13 -3.5 -7 M3.5 -7 Q9.5 -13 15.5 -7" stroke="#2b2b36" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M-3.5 13 Q0 ${sad?12:16.5} 3.5 13" stroke="#555" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <circle cx="0" cy="-15" r="6" fill="#7fdcff" opacity=".35"/><path d="M0 -21 L3.4 -15 L0 -9 L-3.4 -15Z" fill="#7fdcff" stroke="#e8fbff" stroke-width=".7"/>
+</g>`;
+const misoSvg=(x,y,s=1)=>`<g transform="translate(${x},${y}) scale(${s})" data-act="meow">
+  <path d="M20 30 Q50 34 42 4" stroke="#ffc83d" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <ellipse cx="0" cy="28" rx="20" ry="17" fill="#ffd84d"/>
+  <polygon points="-20,-8 -17,-30 -5,-15" fill="#ffd84d"/><polygon points="20,-8 17,-30 5,-15" fill="#ffd84d"/>
+  <polygon points="-16,-11 -15,-23 -8,-15" fill="#ffb3c1"/><polygon points="16,-11 15,-23 8,-15" fill="#ffb3c1"/>
+  <circle cx="0" cy="0" r="21" fill="#ffd84d"/>
+  <path d="M-6 -17 v8 M0 -19 v9 M6 -17 v8" stroke="#f0a91d" stroke-width="2.4" stroke-linecap="round"/>
+  <ellipse cx="-8" cy="1" rx="5" ry="6" fill="#7ed957"/><ellipse cx="8" cy="1" rx="5" ry="6" fill="#7ed957"/>
+  <ellipse cx="-8" cy="2" rx="2" ry="3.8" fill="#222"/><ellipse cx="8" cy="2" rx="2" ry="3.8" fill="#222"/>
+  <circle cx="-6.4" cy="-1.6" r="2" fill="#fff"/><circle cx="9.6" cy="-1.6" r="2" fill="#fff"/>
+  <polygon points="-2,7 2,7 0,10" fill="#ff7a9a"/>
+  <path d="M0 10 q-3 4 -6 2 M0 10 q3 4 6 2" stroke="#8a5a1a" fill="none" stroke-width="1.4"/>
+  <path d="M-22 6 h-12 M-22 10 l-11 4 M22 6 h12 M22 10 l11 4" stroke="#8a5a1a" stroke-width="1"/>
+  <path d="M-14 16 Q0 26 14 16" stroke="#ff4f78" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+  <circle cx="-5" cy="21" r=".9" fill="#fff" opacity=".8"/><circle cx="5" cy="21" r=".9" fill="#fff" opacity=".8"/>
+  <circle cx="0" cy="24.5" r="4" fill="#ffd54f" stroke="#e0a800" stroke-width=".8"/><path d="M-2.5 24.5 h5 M0 24.5 v3" stroke="#a87800" stroke-width=".9"/><circle cx="-1.2" cy="23" r="1" fill="#fff" opacity=".8"/>
+  <g transform="translate(13,-17) rotate(18)"><path d="M0 0 L-9 -6 L-9 6Z" fill="#ff8fb1"/><path d="M0 0 L9 -6 L9 6Z" fill="#ff8fb1"/><path d="M-9 -6 L-9 6 M9 -6 L9 6" stroke="#ff6a97" stroke-width="1"/><circle r="3" fill="#ff5c8a"/><circle cx="-1" cy="-1" r="1" fill="#fff" opacity=".7"/></g>
+  <path transform="translate(-14,-12)" d="M0 -4 L1.2 -1.2 L4 0 L1.2 1.2 L0 4 L-1.2 1.2 L-4 0 L-1.2 -1.2Z" fill="#ff6fa3" stroke="#ffe3ee" stroke-width=".5"/>
+</g>`;
+/* ---- HAZIR RESİMLER: resimler/ klasörüne PNG koyunca otomatik kullanılır ---- */
+const IMG = {};
+['yuna','noha','noha_uzgun','mina','miso'].forEach(n=>{
+  const i = new Image();
+  i.onload = ()=>{ IMG[n]=true; if(window._ready) render(); };
+  i.src = 'resimler/'+n+'.png';
+});
+const pic=(n,x,y,s,w,h,act='')=>`<g transform="translate(${x},${y}) scale(${s})" ${act}><image href="resimler/${n}.png" x="${-w/2}" y="${-h}" width="${w}" height="${h}" preserveAspectRatio="xMidYMax meet"/></g>`;
+const yuna=(x,y,s=1)=> IMG.yuna ? pic('yuna',x,y,s*1.2,150,175) : yunaSvg(x,y,s);
+const noha=(x,y,s=1,sad=true,tat=true)=>{
+  if(!IMG.noha && !IMG.noha_uzgun) return nohaSvg(x,y,s,sad,tat);
+  const n = (sad && IMG.noha_uzgun) ? 'noha_uzgun' : (IMG.noha ? 'noha' : 'noha_uzgun');
+  return pic(n,x,y,s*1.2,150,175,'data-act="tattoo"') + (tat?'':`<text x="${x+34*s}" y="${y-100*s}" font-size="${26*s}" class="tw">❓</text>`);
+};
+const mina=(x,y,s=1,sad=false)=> IMG.mina ? pic('mina',x,y+55*s,s,115,105) : minaSvg(x,y,s,sad);
+const miso=(x,y,s=1)=> IMG.miso ? pic('miso',x,y+45*s,s,100,95,'data-act="meow"') : misoSvg(x,y,s);
+const crystalBody=`
+  <polygon points="0,-30 -16,-14 0,-8" fill="#c9f6ff"/><polygon points="0,-30 16,-14 0,-8" fill="#76d4ff"/>
+  <polygon points="-16,-14 -18,6 0,-8" fill="#8fe0ff"/><polygon points="16,-14 18,6 0,-8" fill="#3fa9f2"/>
+  <polygon points="-18,6 0,-8 -4,28 -8,28" fill="#2f8fe3"/><polygon points="0,-8 -4,28 4,28" fill="#86dcff"/>
+  <polygon points="18,6 0,-8 4,28 8,28" fill="#1c63c8"/>
+  <g fill="none" stroke="#e4faff" stroke-width=".8" stroke-linejoin="round" opacity=".85">
+    <polygon points="0,-30 16,-14 18,6 8,28 -8,28 -18,6 -16,-14"/>
+    <polyline points="-16,-14 0,-8 16,-14"/><polyline points="-18,6 0,-8 18,6"/><polyline points="0,-8 -4,28"/><polyline points="0,-8 4,28"/>
+  </g>
+  <path d="M-9 -22 L-3 -27 L-4 -15Z" fill="#fff" opacity=".95"/>
+  <ellipse cx="-10" cy="-2" rx="1.8" ry="5.5" fill="#fff" opacity=".6" transform="rotate(14 -10 -2)"/>
+  <path d="M8 -16 L12 -13 L9 -9Z" fill="#fff" opacity=".6"/>`;
+const gem=(x,y,s=1,act='')=>`<g transform="translate(${x},${y}) scale(${s})" ${act}>
+  <circle r="64" fill="url(#aura)" class="pu"/>
+  <ellipse cx="0" cy="31" rx="28" ry="5" fill="#08507f" opacity=".3"/>
+  <g class="fl">
+    <g transform="translate(-27,17) rotate(-22) scale(.42)">${crystalBody}</g>
+    <g transform="translate(27,19) rotate(20) scale(.36)">${crystalBody}</g>
+    ${crystalBody}
+    <path class="tw" transform="translate(-13,-24)" d="M0 -8 L1.5 -1.5 L8 0 L1.5 1.5 L0 8 L-1.5 1.5 L-8 0 L-1.5 -1.5Z" fill="#fff"/>
+    <path class="tw" style="animation-delay:.7s" transform="translate(15,-4) scale(.7)" d="M0 -8 L1.5 -1.5 L8 0 L1.5 1.5 L0 8 L-1.5 1.5 L-8 0 L-1.5 -1.5Z" fill="#fff"/>
+    <path class="tw" style="animation-delay:1.2s" transform="translate(2,-34) scale(.6)" d="M0 -8 L1.5 -1.5 L8 0 L1.5 1.5 L0 8 L-1.5 1.5 L-8 0 L-1.5 -1.5Z" fill="#e1f8ff"/>
+  </g>
+  <circle class="tw" cx="-34" cy="-18" r="1.6" fill="#bff0ff"/><circle class="tw" style="animation-delay:.5s" cx="36" cy="-24" r="1.3" fill="#bff0ff"/><circle class="tw" style="animation-delay:1s" cx="30" cy="8" r="1.5" fill="#bff0ff"/><circle class="tw" style="animation-delay:1.5s" cx="-30" cy="10" r="1.2" fill="#bff0ff"/>
+</g>`;
+
+/* ---------- ARKA PLANLAR ---------- */
+const rnd=seed=>{let a=seed;return()=>(a=(a*16807)%2147483647)/2147483647;};
+const pine=(x,y,s,c1,c2)=>`<g transform="translate(${x},${y}) scale(${s})"><rect x="-4.5" y="6" width="9" height="24" fill="#5a4034"/><rect x="0" y="6" width="4.5" height="24" fill="#6d4e3f"/>
+  <polygon points="0,-26 -36,14 36,14" fill="${c1}"/><polygon points="0,-26 0,14 36,14" fill="${c2}"/>
+  <polygon points="0,-50 -30,-2 30,-2" fill="${c1}"/><polygon points="0,-50 0,-2 30,-2" fill="${c2}"/>
+  <polygon points="0,-74 -23,-26 23,-26" fill="${c1}"/><polygon points="0,-74 0,-26 23,-26" fill="${c2}"/></g>`;
+const cloud=(x,y,k)=>`<g opacity=".88" transform="translate(${x},${y}) scale(${k})"><ellipse cx="0" cy="0" rx="32" ry="10" fill="#fff"/><ellipse cx="-14" cy="-6" rx="17" ry="10" fill="#fff"/><ellipse cx="11" cy="-9" rx="19" ry="12" fill="#fff"/></g>`;
+function bg(mode='day'){
+  const night=mode==='night', glow=mode==='glow', r=rnd(11);
+  const sky=night?['#0a1330','#1f3a6e','#4a6aa0']:glow?['#3f86c8','#8fd8ff','#e6fbff']:['#4a86d4','#8cc8f5','#eaf7ff'];
+  const mtn=night?['#1d3160','#16264d']:glow?['#8bbbe0','#6fa6d2']:['#86aad8','#6d9bcc'];
+  const c1=night?'#0f3a2a':glow?'#2f9a63':'#2b7f4f', c2=night?'#1c5a40':glow?'#5bcb8c':'#45a96a';
+  const sil=night?'#0b2a20':glow?'#3d9d6c':'#3a8a5c';
+  const gr=night?['#1d4a38','#0d2b21']:glow?['#5ccb84','#2f9060']:['#58b66a','#2f7f48'];
+  let o=`<defs>
+   <linearGradient id="k${mode}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky[0]}"/><stop offset=".6" stop-color="${sky[1]}"/><stop offset="1" stop-color="${sky[2]}"/></linearGradient>
+   <linearGradient id="g${mode}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${gr[0]}"/><stop offset="1" stop-color="${gr[1]}"/></linearGradient>
+   <radialGradient id="o${mode}"><stop offset="0" stop-color="#fffbe0" stop-opacity=".95"/><stop offset=".4" stop-color="#fff3a8" stop-opacity=".45"/><stop offset="1" stop-color="#fff3a8" stop-opacity="0"/></radialGradient>
+   <radialGradient id="v${mode}" cx=".5" cy=".5" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="${night?.4:.25}"/></radialGradient></defs>
+   <rect width="400" height="260" fill="url(#k${mode})"/>`;
+  if(night){
+    for(let i=0;i<34;i++) o+=`<circle class="tw" style="animation-delay:${(i%7)*.3}s" cx="${r()*400}" cy="${r()*120}" r="${.6+r()*1.2}" fill="#fff"/>`;
+    o+=`<circle cx="338" cy="44" r="46" fill="url(#o${mode})"/><circle cx="338" cy="44" r="16" fill="#fff6d0"/><circle cx="333" cy="40" r="3" fill="#e9e0b8"/><circle cx="344" cy="49" r="2" fill="#e9e0b8"/>`;
+  } else {
+    o+=`<circle cx="335" cy="46" r="58" fill="url(#o${mode})"/><circle cx="335" cy="46" r="17" fill="#fffbd0"/>`;
+    o+=`<polygon points="335,46 90,260 190,260" fill="#fff7c2" opacity=".10"/><polygon points="335,46 200,260 270,260" fill="#fff7c2" opacity=".08"/><polygon points="335,46 30,230 70,260" fill="#fff7c2" opacity=".07"/>`;
+    o+=cloud(70,48,1)+cloud(190,30,.8)+cloud(250,72,.9);
+  }
+  o+=`<path d="M0 172 L38 124 L78 152 L128 98 L186 150 L238 116 L296 156 L350 108 L400 150 L400 200 L0 200Z" fill="${mtn[0]}" opacity=".85"/>`;
+  o+=`<path d="M0 190 L50 146 L110 178 L170 138 L235 180 L300 142 L360 176 L400 156 L400 200 L0 200Z" fill="${mtn[1]}" opacity=".9"/>`;
+  for(let i=0;i<30;i++){ const x=i*14+r()*6-4, sc=.4+r()*.22; o+=`<polygon points="${x},${184-82*sc} ${x-26*sc},184 ${x+26*sc},184" fill="${sil}"/>`; }
+  o+=`<ellipse cx="200" cy="192" rx="270" ry="14" fill="#fff" opacity="${night?.07:.3}"/>`;
+  o+=pine(36,170,1,c1,c2)+pine(92,178,.74,c1,c2)+pine(332,167,1.1,c1,c2)+pine(378,176,.8,c1,c2);
+  o+=`<ellipse cx="200" cy="300" rx="400" ry="108" fill="url(#g${mode})"/>`;
+  o+=`<path d="M182 262 Q196 222 212 197 L226 197 Q218 224 252 262Z" fill="${night?'#6b5a45':'#d4b98a'}" opacity=".7"/>`;
+  const fc=['#ff8fb1','#ffd54f','#ffffff','#ce93d8'];
+  for(let i=0;i<18;i++){ const x=r()*400, y=208+r()*48; o+=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-7}" stroke="${gr[1]}" stroke-width="1.2"/><circle cx="${x}" cy="${y-8}" r="2.3" fill="${fc[i%4]}" opacity="${night?.7:1}"/>`; }
+  for(let i=0;i<44;i++){ const x=i*9.2+r()*5, h=5+r()*7; o+=`<path d="M${x} 262 Q${x+1} ${262-h/2} ${x+(r()-.5)*5} ${262-h}" stroke="${gr[1]}" stroke-width="1.7" fill="none" stroke-linecap="round"/>`; }
+  if(night||glow) for(let i=0;i<14;i++) o+=`<circle class="tw" style="animation-delay:${(i%6)*.4}s" cx="${r()*400}" cy="${120+r()*110}" r="${1.2+r()*1.4}" fill="${glow?'#bff0ff':'#fff59d'}" opacity=".85"/>`;
+  o+=`<rect width="400" height="260" fill="url(#v${mode})"/>`;
+  return o;
+}
+const sparkle=(x,y,s=1)=>`<path class="tw" transform="translate(${x},${y}) scale(${s})" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2Z" fill="#fff8b0"/>`;
+
+const caveSvg=`<g>
+  <defs>
+    <linearGradient id="cvRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#848996"/><stop offset=".5" stop-color="#5b5f6b"/><stop offset="1" stop-color="#34363e"/></linearGradient>
+    <radialGradient id="cvDark" cx=".5" cy=".75" r=".7"><stop offset="0" stop-color="#000"/><stop offset=".7" stop-color="#05050a"/><stop offset="1" stop-color="#1c1c25"/></radialGradient>
+  </defs>
+  <ellipse cx="72" cy="207" rx="72" ry="8" fill="#000" opacity=".28"/>
+  <path d="M8 206 Q4 160 28 138 Q50 116 82 122 Q114 128 130 160 Q140 186 134 206Z" fill="url(#cvRock)"/>
+  <path d="M28 138 Q50 116 82 122 L70 150 L38 162Z" fill="#9a9fab" opacity=".55"/>
+  <path d="M130 160 Q114 128 82 122 L98 156 L124 186Z" fill="#26282f" opacity=".6"/>
+  <path d="M18 190 L30 168 L40 176 M114 150 L104 170 L116 182 M60 132 L66 144 L54 150" stroke="#2d2f36" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <path d="M34 206 Q34 148 70 144 Q106 148 106 206Z" fill="url(#cvDark)"/>
+  <path d="M34 206 Q34 148 70 144 Q106 148 106 206" stroke="#aeb3c0" stroke-width="2" fill="none" opacity=".55"/>
+  <path d="M46 206 Q46 164 70 160 Q94 164 94 206Z" fill="#000" opacity=".6"/>
+  <g fill="#2b2d35"><polygon points="42,160 49,160 45,176"/><polygon points="53,152 60,151 56,170"/><polygon points="66,148 74,148 70,164"/><polygon points="80,151 87,152 84,168"/><polygon points="92,159 99,160 96,174"/></g>
+  <g fill="#23252c"><polygon points="44,206 50,206 47,194"/><polygon points="86,206 93,206 90,192"/></g>
+  <g class="tw"><circle cx="62" cy="186" r="1.7" fill="#ffd54f"/><circle cx="68" cy="186" r="1.7" fill="#ffd54f"/></g>
+  <ellipse cx="12" cy="203" rx="13" ry="9" fill="#5c606c"/><ellipse cx="9" cy="200" rx="7" ry="3.5" fill="#8b909d" opacity=".7"/>
+  <ellipse cx="130" cy="204" rx="11" ry="8" fill="#4a4d58"/><ellipse cx="127" cy="201" rx="6" ry="3" fill="#7b808d" opacity=".7"/>
+  <ellipse cx="55" cy="124" rx="16" ry="5" fill="#4f8a4a" opacity=".85"/><ellipse cx="96" cy="130" rx="12" ry="4" fill="#5c9a53" opacity=".85"/><ellipse cx="30" cy="146" rx="7" ry="3" fill="#4f8a4a" opacity=".8"/>
+  <path d="M-2 206 q4 -12 6 0 M2 206 q8 -16 10 0 M136 206 q4 -12 6 0 M141 206 q8 -14 9 0" stroke="#3f8f4f" stroke-width="2" fill="none" stroke-linecap="round"/>
+</g>`;
+const stumpSvg=`<g transform="translate(335,205) scale(.9)">
+  <defs><linearGradient id="stG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c2aa8e"/><stop offset=".45" stop-color="#8f7459"/><stop offset="1" stop-color="#4a372a"/></linearGradient></defs>
+  <ellipse cx="0" cy="3" rx="38" ry="7" fill="#000" opacity=".3"/>
+  <path d="M-15 -6 Q-30 -2 -42 6 Q-26 5 -13 0Z" fill="#7a6048"/><path d="M15 -6 Q30 -2 42 6 Q26 5 13 0Z" fill="#3f2f23"/>
+  <path d="M-8 0 Q-16 8 -28 11 Q-14 8 -4 1Z" fill="#6e553e"/><path d="M8 0 Q16 8 27 10 Q14 8 4 1Z" fill="#3f2f23"/>
+  <path d="M-19 0 Q-22 -22 -17 -40 L-14 -49 L-9 -42 L-6 -55 L0 -45 L5 -58 L9 -46 L14 -51 L17 -40 Q22 -22 19 0 Q0 7 -19 0Z" fill="url(#stG)"/>
+  <path d="M-9 -42 L-6 -55 L0 -45 L-2 -37Z" fill="#6a5340"/><path d="M5 -58 L9 -46 L3 -41Z" fill="#33261c"/>
+  <ellipse cx="0" cy="-17" rx="7.5" ry="11" fill="#150e09"/><path d="M-7.5 -17 Q0 -30 7.5 -17" stroke="#9c8265" stroke-width="1.5" fill="none" opacity=".7"/>
+  <path d="M-13 -4 Q-15 -22 -12 -40 M-5 -2 Q-8 -24 -4 -46 M6 -2 Q4 -24 7 -46 M13 -4 Q11 -22 14 -40" stroke="#33261c" stroke-width="1.4" fill="none" opacity=".75" stroke-linecap="round"/>
+  <path d="M-16 -8 Q-18 -24 -15 -38 M-9 -6 Q-11 -22 -8 -34" stroke="#e1d0b6" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M11 -46 L8 -36 L13 -29 L9 -20 L12 -10" stroke="#241a12" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M17 -32 Q29 -37 34 -50 M27 -38 Q33 -39 38 -37 M31 -44 Q32 -50 29 -54" stroke="#4b3a2c" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M-26 6 q-2 -9 1 -13 M-22 6 q1 -11 4 -14 M24 6 q1 -8 4 -12 M29 5 q0 -9 4 -11 M-34 4 q-1 -6 1 -9" stroke="#b9a35a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <ellipse cx="-30" cy="8" rx="4" ry="1.8" fill="#6a5238" transform="rotate(-10 -30 8)"/><ellipse cx="34" cy="9" rx="3.4" ry="1.6" fill="#4a3a2c" transform="rotate(8 34 9)"/>
+</g>`;
+const lakeSvg=`<g>
+  <defs>
+    <linearGradient id="lkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6e6f2"/><stop offset=".35" stop-color="#4fb0e0"/><stop offset="1" stop-color="#1a5aa3"/></linearGradient>
+    <clipPath id="lkClip"><path d="M143 206 Q147 193 170 188 Q200 183 230 189 Q256 195 259 207 Q254 223 225 226 Q200 229 175 226 Q148 222 143 206Z"/></clipPath>
+  </defs>
+  <path d="M136 207 Q140 189 168 183 Q200 177 233 184 Q262 191 266 207 Q260 228 227 232 Q200 235 172 231 Q142 227 136 207Z" fill="#a8946b"/>
+  <path d="M139 207 Q143 191 169 185 Q200 180 232 186 Q259 193 263 207 Q257 226 226 230 Q200 233 173 229 Q144 225 139 207Z" fill="#7b6a4c" opacity=".7"/>
+  <path d="M143 206 Q147 193 170 188 Q200 183 230 189 Q256 195 259 207 Q254 223 225 226 Q200 229 175 226 Q148 222 143 206Z" fill="url(#lkG)"/>
+  <g clip-path="url(#lkClip)">
+    <path d="M143 196 L160 192 L175 196 L192 190 L212 196 L232 191 L259 197 L259 204 L143 204Z" fill="#6d9bcc" opacity=".45"/>
+    <g fill="#1f6b45" opacity=".5"><polygon points="152,192 146,214 158,214"/><polygon points="165,190 158,218 172,218"/><polygon points="178,192 173,212 183,212"/><polygon points="240,191 233,216 247,216"/><polygon points="252,194 247,212 257,212"/></g>
+    <path d="M225 190 L229 192 M222 196 L231 197 M220 202 L233 203 M223 208 L231 209" stroke="#fff6b8" stroke-width="2" opacity=".6" stroke-linecap="round"/>
+    <ellipse cx="195" cy="208" rx="20" ry="4.5" fill="none" stroke="#fff" stroke-width="1" opacity=".5"/><ellipse cx="195" cy="208" rx="11" ry="2.4" fill="none" stroke="#fff" stroke-width="1" opacity=".55"/>
+    <ellipse cx="170" cy="217" rx="12" ry="2.6" fill="none" stroke="#fff" stroke-width=".9" opacity=".35"/><ellipse cx="225" cy="218" rx="9" ry="2" fill="none" stroke="#fff" stroke-width=".9" opacity=".35"/>
+    <path d="M150 220 Q175 226 205 224" stroke="#0f3f7c" stroke-width="3" fill="none" opacity=".25"/>
+  </g>
+  <path d="M146 200 Q152 190 172 187 Q200 183 228 188" stroke="#e6fbff" stroke-width="1.4" fill="none" opacity=".6"/>
+  <ellipse cx="208" cy="214" rx="8" ry="3" fill="#3f9a4a"/><path d="M208 214 L216 212" stroke="#2c7a3a" stroke-width=".8"/><circle cx="206" cy="212.5" r="2.2" fill="#ffc1d9"/><circle cx="206" cy="212.5" r="1" fill="#ffe082"/>
+  <ellipse cx="182" cy="219" rx="6" ry="2.2" fill="#3a8f46"/>
+  <g class="tw"><circle cx="190" cy="204" r="1.2" fill="#fff"/><circle cx="214" cy="200" r="1" fill="#fff"/><circle cx="176" cy="212" r="1" fill="#fff"/></g>
+  <g fill="#8d8a86"><ellipse cx="150" cy="224" rx="4.5" ry="2.6"/><ellipse cx="160" cy="229" rx="3.5" ry="2"/><ellipse cx="240" cy="228" rx="4.2" ry="2.4"/><ellipse cx="256" cy="220" rx="3.6" ry="2.2"/><ellipse cx="141" cy="214" rx="3" ry="2"/></g>
+  <g fill="#b3b0aa" opacity=".8"><ellipse cx="149" cy="223" rx="2" ry="1"/><ellipse cx="239" cy="227" rx="2" ry="1"/></g>
+  <g stroke="#4f7d3c" stroke-width="1.8" stroke-linecap="round" fill="none"><path d="M143 207 Q141 194 139 186"/><path d="M147 209 Q147 196 148 187"/><path d="M151 210 Q155 198 158 191"/><path d="M262 206 Q266 194 268 187"/><path d="M258 208 Q259 197 256 189"/></g>
+  <g fill="#6b4a2f"><rect x="138" y="182" width="2.6" height="7" rx="1.2"/><rect x="146.7" y="183" width="2.6" height="7" rx="1.2"/><rect x="267" y="183" width="2.6" height="7" rx="1.2"/></g>
+</g>`;
+const ffly=(x,y,i)=>`<g data-act="firefly" data-i="${i}" transform="translate(${x},${y})" class="${state.flies>=5?'on':''}"><g class="ffly" style="animation-delay:${i*-.8}s">
+  <circle r="17" fill="url(#ffGlow)" class="ffg" style="animation-delay:${i*-.5}s"/>
+  <ellipse cx="-4" cy="-4.5" rx="5.2" ry="2.2" fill="#e8f7ff" opacity=".6" transform="rotate(-35 -4 -4.5)" class="ffw"/>
+  <ellipse cx="4" cy="-4.5" rx="5.2" ry="2.2" fill="#e8f7ff" opacity=".6" transform="rotate(35 4 -4.5)" class="ffw"/>
+  <path d="M-1 -5.5 L-3 -9 M1 -5.5 L3 -9" stroke="#2a1d12" stroke-width=".6" fill="none"/>
+  <path d="M-1.6 1 L-3.6 3.5 M1.6 1 L3.6 3.5 M-1.5 -1 L-3.8 0.5 M1.5 -1 L3.8 0.5" stroke="#2a1d12" stroke-width=".5" fill="none"/>
+  <ellipse cx="0" cy="-1" rx="2.4" ry="3.6" fill="#3a2a1a"/><circle cy="-4.8" r="1.7" fill="#2a1d12"/><path d="M-2.2 -2 Q0 -3.4 2.2 -2" stroke="#a5301f" stroke-width=".9" fill="none"/>
+  <ellipse cx="0" cy="4.6" rx="2.1" ry="3.4" fill="#d9ff5a" class="ffa" style="animation-delay:${i*-.5}s"/>
+  <ellipse cx="-.5" cy="3.6" rx=".7" ry="1.3" fill="#fff" opacity=".7"/>
+</g></g>`;
+/* ---------- SAYFALAR ---------- */
+let state = {flies:0, solved:false, tattoo:false, bloom:false};
+const pages = [
+ { // 0 kapak
+  s:()=> bg('day')+yuna(130,238,.95)+mina(235,178,1,false).replace('<g ','<g data-act="howl" ')+sparkle(60,50)+sparkle(300,90,1.4)+sparkle(190,40),
+  t:()=>`<b>Yuna ve Mina: OPTCAS'ın Sırrı</b><br>Yuna adında zeki bir kız ve Mina adında küçük ama asil bir kurt yavrusu varmış. Hadi, maceraya başlayalım!`,
+  h:'👆 Mina\'ya dokun, uluyor!'},
+ { // 1 orman
+  s:()=>{ let f=''; const pts=[[70,90],[150,60],[250,100],[320,70],[200,120]];
+    pts.forEach((p,i)=>{ f+=ffly(p[0],p[1],i); });
+    return bg(state.flies>=5?'glow':'night')+yuna(120,238,.9)+mina(215,185,.85)+f;},
+  t:()=>`Bir zamanlar büyülü bir ormanda Yuna ile Mina yaşarmış. Ormanın kalbinde <b>OPTCAS</b> adında masmavi parlayan bir element varmış. Gücü <b style="color:#2e9e5b">doğayı kontrol etmekmiş</b>. ${state.flies>=5?'<br>✨ Bütün ateş böcekleri yandı, orman aydınlandı!':''}`,
+  h:()=>state.flies>=5?'':`👆 Ateş böceklerine dokun (${state.flies}/5)`},
+ { // 2 kötü Noha
+  s:()=>bg('night')
+    +[0,1,2].map(i=>minaSvg(56+i*52,154,.8,true,['#7f8a9c','#a09384','#6f7a8c'][i],['#e8ecf3','#f3ece2','#e6ebf3'][i],1.2,1.2)).join('')
+    +`<g stroke="#9aa" stroke-width="3">${[30,60,90,120,150,180,210].map(x=>`<line x1="${x}" y1="105" x2="${x}" y2="215"/>`).join('')}<line x1="25" y1="105" x2="215" y2="105"/><line x1="25" y1="215" x2="215" y2="215"/></g>`
+    +mina(300,175,.9,true).replace('<g ','<g data-act="howl" ')
+    +`<text x="258" y="125" font-size="26" class="tw">💔</text>`,
+  t:()=>`Bir gün kötü <b>Noha</b>, Mina'nın ailesini bir yere hapsetmiş! Onları kurtarmanın tek yolu OPTCAS'ı bulmakmış. Mina çok üzgünmüş.`,
+  h:'👆 Mina\'ya dokun'},
+ { // 3 bulmaca
+  s:()=>bg('day')
+    +caveSvg
+    +lakeSvg
+    +stumpSvg
+    +(state.solved?gem(200,172,.8):'')
+    +yuna(285,252,.55)
+    +`<text x="262" y="150" font-size="26" class="tw">${state.solved?'💡':'🤔'}</text>`,
+  t:()=>state.solved
+    ?`<b>Doğru!</b> OPTCAS mavi gölün kıyısında parlıyordu. Yuna çok zekiydi!`
+    :`Yuna zekiydi, ipuçlarını çözdü:<br><i>"OPTCAS mavi parlar. Suyu ve çiçekleri sever. Karanlıktan hoşlanmaz."</i><br>Sence OPTCAS nerede?`,
+  x:()=>state.solved?'':`<button class="ch" onclick="guess(0)">🕳️ Karanlık mağara</button><button class="ch" onclick="guess(1)">🌊 Mavi gölün kıyısı</button><button class="ch" onclick="guess(2)">🪵 Kuru ağaç kütüğü</button>`,
+  lock:()=>!state.solved},
+ { // 4 Noha ile karşılaşma
+  s:()=>bg('glow')+gem(60,178,.9)+yuna(110,242,.85)+noha(255,242,.9,!state.tattoo,state.tattoo)
+    +(state.tattoo?`<text x="85" y="88" font-size="28">😮</text>`:''),
+  t:()=>state.tattoo
+    ?`Noha'nın kolunda bir <b>kedi dövmesi</b> vardı! Yuna hatırladı: küçükken ikisi de kedileri çok severdi. <br><b>"Sen benim kardeşimsin!"</b> dedi Yuna.`
+    :`OPTCAS'ın yanında Noha'yı buldular. Noha genç ve mavi gözlüydü, tıpkı Yuna gibi Koreliydi. Çok üzgündü: annesini bir trafik kazasında kaybetmişti ve yolunu şaşırmıştı. Yuna dikkatle baktı...`,
+  h:()=>state.tattoo?'':'👆 Noha\'nın koluna dokun!',
+  lock:()=>!state.tattoo},
+ { // 5 sarılma
+  s:()=>bg('glow')+yuna(160,242,.9)+noha(240,242,.9,false,true)+`<text x="185" y="55" font-size="34" class="tw">💙</text>`+gem(60,196,.75),
+  t:()=>`Noha gözyaşlarını sildi. İki kardeş sımsıkı sarılıp barıştılar. Artık yalnız değillerdi.`,
+  h:'👆 Sarılmaya dokun, kalpler uçsun!', tapAny:'💙'},
+ { // 6 Miso
+  s:()=>bg('day')+yuna(80,242,.85)+noha(165,242,.88,false,true)+miso(265,195,1.1)+mina(345,205,.7),
+  t:()=>`Yuna kardeşine bir hediye almıştı: sarı tüylü, sapsarı bir kedi, <b>Miso</b>! Miso da Mina gibi küçük bir yavruydu. İkisi hemen kanka oldular. 🐱🐺`,
+  h:'👆 Miso\'ya dokun'},
+ { // 7 aile
+  s:()=>bg('day')+mina(70,160,1)+minaSvg(180,146,1.35,false,'#7f8a9c','#e8ecf3',1.15,1.2)+minaSvg(305,152,1.25,false,'#a09384','#f3ece2',1.15,1.2)+`<text x="170" y="62" font-size="30" class="tw">💛</text>`,
+  t:()=>`Noha, Mina'nın ailesini serbest bıraktı. Mina ailesine kavuştu! Kocaman bir sarılma oldu. 🐺💛`,
+  h:'👆 Kurtlara dokun', tapAny:'💛'},
+ { // 8 son
+  s:()=>bg(state.bloom?'glow':'day')+(state.bloom?[40,90,150,250,310,360].map((x,i)=>`<g transform="translate(${x},${220+(i%2)*14})"><line x1="0" y1="0" x2="0" y2="-16" stroke="#2e9e5b" stroke-width="3"/><circle cx="0" cy="-20" r="7" fill="${['#ff8fb1','#ffd54f','#ce93d8'][i%3]}"/><circle cx="0" cy="-20" r="3" fill="#fff"/></g>`).join(''):'')
+    +yuna(95,242,.8)+noha(165,242,.82,false,true)+mina(245,185,.7)+miso(290,200,.8)
+    +`<g data-act="optcas"><g transform="translate(205,50)">${gem(0,0,.95)}</g></g>`,
+  t:()=>state.bloom
+    ?`OPTCAS'ı büyülü ormana geri bıraktılar. Doğayı kontrol etme gücüyle çiçekler açtı, orman yeniden masmavi parladı. 🌸<br><b>SON</b> 💙`
+    :`İşleri bitince OPTCAS'ı büyülü ormana geri bıraktılar. Hadi, OPTCAS'ın gücünü sen kullan!`,
+  h:()=>state.bloom?'':'👆 OPTCAS\'a dokun!'}
+];
+
+/* ---------- MOTOR ---------- */
+let cur = 0;
+const $ = id => document.getElementById(id);
+function val(v){ return typeof v==='function'?v():v; }
+function render(){
+  const p = pages[cur];
+  $('scene').innerHTML = p.s();
+  $('text').innerHTML = p.t();
+  $('hint').textContent = val(p.h)||'';
+  $('extra').innerHTML = p.x?p.x():'';
+  $('back').disabled = cur===0;
+  const locked = p.lock && p.lock();
+  $('next').disabled = cur===pages.length-1 || locked;
+  $('dots').innerHTML = pages.map((_,i)=>`<i class="${i===cur?'on':''}"></i>`).join('');
+}
+function say(){ // metni ve ipucunu yenile, sahneyi de
+  const p=pages[cur]; $('scene').innerHTML=p.s(); $('text').innerHTML=p.t(); $('hint').textContent=val(p.h)||''; $('extra').innerHTML=p.x?p.x():'';
+  $('next').disabled = cur===pages.length-1 || (p.lock && p.lock());
+}
+function floatHeart(evt, emoji){
+  const svg=$('scene'), pt=svg.createSVGPoint(); pt.x=evt.clientX; pt.y=evt.clientY;
+  const c=pt.matrixTransform(svg.getScreenCTM().inverse());
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',c.x); t.setAttribute('y',c.y); t.setAttribute('class','heart'); t.setAttribute('font-size','22'); t.textContent=emoji;
+  svg.appendChild(t); setTimeout(()=>t.remove(),1400);
+}
+function guess(i){
+  pop();
+  if(i===1){ state.solved=true; chime(); setTimeout(chime,250); say(); }
+  else $('hint').textContent = i===0 ? '🕳️ Orası karanlık! OPTCAS karanlığı sevmez. Tekrar dene.' : '🪵 Orası kuru! OPTCAS suyu sever. Tekrar dene.';
+}
+$('scene').addEventListener('click', e=>{
+  startMusic();
+  const el = e.target.closest('[data-act]'); const p = pages[cur];
+  if(el){
+    const a = el.dataset.act;
+    if(a==='howl'){ howl(); floatHeart(e,'🐺'); }
+    else if(a==='meow'){ meow(); floatHeart(e,'🐱'); floatHeart({clientX:e.clientX+14,clientY:e.clientY},'💛'); }
+    else if(a==='firefly'){ if(!el.dataset.on){ el.dataset.on=1; el.classList.add('on'); chime(); state.flies++; if(state.flies>=5){ setTimeout(say,200);} else $('hint').textContent=`👆 Ateş böceklerine dokun (${state.flies}/5)`; } }
+    else if(a==='tattoo'){ if(!state.tattoo){ state.tattoo=true; chime(); meow(); say(); } }
+    else if(a==='optcas'){ if(!state.bloom){ state.bloom=true; chime(); setTimeout(chime,200); setTimeout(()=>tone(1568,.6,'sine',.12),400); say(); } }
+    return;
+  }
+  if(p.tapAny){ pop(); floatHeart(e,p.tapAny); }
+});
+$('next').onclick = ()=>{ startMusic(); if(cur<pages.length-1){cur++;render();} };
+$('back').onclick = ()=>{ if(cur>0){cur--;render();} };
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'&&!$('next').disabled) $('next').click(); if(e.key==='ArrowLeft') $('back').click(); });
+render();
+window._ready = true;
+</script>
+</body>
+</html>
