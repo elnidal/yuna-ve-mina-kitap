@@ -42,6 +42,12 @@
   @keyframes ffw{to{transform:scaleY(.55)}}
   .on .ffg{animation:none;opacity:1}
   .on .ffa{animation:none;fill:#fffde0}
+  .sn{animation:sn 7s linear infinite}
+  @keyframes sn{from{transform:translateY(-14px)}to{transform:translateY(274px)}}
+  .shoot{animation:shoot 5.5s ease-in infinite}
+  @keyframes shoot{0%{transform:translate(-30px,-14px);opacity:0}12%{opacity:1}55%{opacity:1}100%{transform:translate(150px,64px);opacity:0}}
+  .spin{animation:spin 50s linear infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes spin{to{transform:rotate(360deg)}}
   .fl{animation:fl 3s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-4px)}}
   .pu{animation:pu 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pu{50%{opacity:.5;transform:scale(1.12)}}
   @keyframes tw{50%{opacity:.35}}
@@ -55,6 +61,12 @@
   <defs>
     <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <radialGradient id="ffGlow"><stop offset="0" stop-color="#f4ff9a" stop-opacity=".95"/><stop offset=".3" stop-color="#c8ff4a" stop-opacity=".5"/><stop offset="1" stop-color="#b6ff3a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="streakG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff6c8" stop-opacity="0"/><stop offset=".5" stop-color="#fffbe6" stop-opacity=".95"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></linearGradient>
+    <linearGradient id="streakV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c8" stop-opacity="0"/><stop offset=".5" stop-color="#fffbe6" stop-opacity=".9"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></linearGradient>
+    <radialGradient id="starCore"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#fff6b8" stop-opacity=".9"/><stop offset="1" stop-color="#ffd54f" stop-opacity="0"/></radialGradient>
+    <linearGradient id="trailG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd54f" stop-opacity="0"/><stop offset="1" stop-color="#ffe27a" stop-opacity=".95"/></linearGradient>
+    <radialGradient id="starGlow"><stop offset="0" stop-color="#fff6b0" stop-opacity=".95"/><stop offset=".4" stop-color="#ffd54f" stop-opacity=".4"/><stop offset="1" stop-color="#ffd54f" stop-opacity="0"/></radialGradient>
+    <linearGradient id="starG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8c2"/><stop offset=".55" stop-color="#ffd54f"/><stop offset="1" stop-color="#ff9f1c"/></linearGradient>
     <radialGradient id="aura"><stop offset="0" stop-color="#bff3ff" stop-opacity=".85"/><stop offset=".35" stop-color="#5fc8ff" stop-opacity=".4"/><stop offset="1" stop-color="#5fc8ff" stop-opacity="0"/></radialGradient>
     <linearGradient id="iris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173f8a"/><stop offset=".55" stop-color="#3fb3f0"/><stop offset="1" stop-color="#c4f4ff"/></linearGradient>
     <linearGradient id="hairD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0b10"/><stop offset="1" stop-color="#2b2b36"/></linearGradient>
@@ -137,18 +149,19 @@ const yunaSvg=(x,y,s=1)=>`<g transform="translate(${x},${y}) scale(${s*1.2})">
   <path d="M-12 -150 Q-10.2 -151.2 -8.32 -152" stroke="#9aa7bd" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M-8.32 -152 Q-6.4 -152.8 -4.48 -153.2" stroke="#ffd54f" stroke-width="3.2" fill="none"/><path d="M-4.48 -153.2 Q-2.5 -153.7 -.48 -153.6" stroke="#ffffff" stroke-width="3.2" fill="none"/><path d="M-.48 -153.6 Q1.6 -153.6 3.68 -153.2" stroke="#4fc3f7" stroke-width="3.2" fill="none"/><path d="M3.68 -153.2 Q5.9 -152.8 8 -152" stroke="#9aa7bd" stroke-width="3.2" fill="none" stroke-linecap="round"/>
   <g transform="translate(-12,-148) scale(.72)"><g fill="#fff" stroke="#cfd6e4" stroke-width=".4"><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(0)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(36)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(72)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(108)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(144)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(180)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(216)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(252)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(288)"/><ellipse cx="0" cy="-4.6" rx="1.7" ry="3.4" transform="rotate(324)"/></g><circle r="2.3" fill="#ffc400"/><circle cx="-.6" cy="-.6" r=".8" fill="#ffe27a"/></g>
 </g>`;
-const nohaSvg=(x,y,s=1,sad=true,tat=true)=>`<g transform="translate(${x},${y}) scale(${s*1.2})">
+const nohaSvg=(x,y,s=1,sad=true,tat=true,noTat=false)=>`<g transform="translate(${x},${y}) scale(${s*1.2})">
   <path d="M-19 -133 Q-25 -162 0 -160 Q25 -162 19 -133 Q31 -96 25 -56 Q16 -48 12 -64 L10 -108 L-10 -108 L-12 -64 Q-16 -48 -25 -56 Q-31 -96 -19 -133Z" fill="url(#hairN)"/>
   ${outfitBody('#b79cf2','#5b3fa8','#2b2f4a','#1c2036','#4a3a3a')}
   ${outfitSleeve(-1,'#b79cf2','#5b3fa8')}
   <circle cx="-24" cy="-60" r="3.8" fill="#ffe6d5"/>
-  <path d="M17 -101 Q31 -94 29 -78" stroke="#b79cf2" stroke-width="9" fill="none" stroke-linecap="round"/>
+  ${noTat?'':`<path d="M17 -101 Q31 -94 29 -78" stroke="#b79cf2" stroke-width="9" fill="none" stroke-linecap="round"/>
   <path d="M29 -78 Q34 -92 24 -100" stroke="#ffe6d5" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="23" cy="-101" r="3.8" fill="#ffe6d5"/>
   <path d="M24 -81 L34 -79" stroke="#5b3fa8" stroke-width="3.4" stroke-linecap="round"/>
   <g data-act="tattoo">
     <circle cx="31.5" cy="-91" r="14" fill="transparent"/>
     ${tat?'<g><circle cx="31.5" cy="-91" r="4.2" fill="#5c3a6b"/><path d="M28 -93.5 L28.6 -99 L31 -95.5Z M35 -93.5 L34.4 -99 L32 -95.5Z" fill="#5c3a6b"/><circle cx="30" cy="-91.5" r=".8" fill="#fff"/><circle cx="33" cy="-91.5" r=".8" fill="#fff"/></g>':'<circle cx="31.5" cy="-91" r="9" fill="none" stroke="#ffd54f" stroke-width="2" stroke-dasharray="3 3" class="tw"/>'}
   </g>
+  `}
   ${aFace}${aEye(-8.5,-1)}${aEye(8.5,1)}
   ${sad?'<path d="M-13 -136.5 L-4 -141 M13 -136.5 L4 -141" stroke="#1d1b26" stroke-width="1.8" stroke-linecap="round"/><path d="M-12 -120 q-1.5 7 1 11" stroke="#6ec6ff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M-3 -111 Q0 -114 3 -111" stroke="#a0525f" stroke-width="1.8" fill="none" stroke-linecap="round"/>':'<path d="M-13 -139 Q-9 -142 -4 -140 M4 -140 Q9 -142 13 -139" stroke="#1d1b26" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M-4 -113 Q0 -108 4 -113" stroke="#a0525f" stroke-width="1.8" fill="none" stroke-linecap="round"/>'}
   <path d="M-18 -131 Q-21 -159 0 -157 Q21 -159 18 -131 Q14 -141 6 -144 Q0 -139 -6 -144 Q-14 -141 -18 -131Z" fill="url(#hairN)"/>
@@ -258,7 +271,7 @@ const pine=(x,y,s,c1,c2)=>`<g transform="translate(${x},${y}) scale(${s})"><rect
   <polygon points="0,-50 -30,-2 30,-2" fill="${c1}"/><polygon points="0,-50 0,-2 30,-2" fill="${c2}"/>
   <polygon points="0,-74 -23,-26 23,-26" fill="${c1}"/><polygon points="0,-74 0,-26 23,-26" fill="${c2}"/></g>`;
 const cloud=(x,y,k)=>`<g opacity=".88" transform="translate(${x},${y}) scale(${k})"><ellipse cx="0" cy="0" rx="32" ry="10" fill="#fff"/><ellipse cx="-14" cy="-6" rx="17" ry="10" fill="#fff"/><ellipse cx="11" cy="-9" rx="19" ry="12" fill="#fff"/></g>`;
-function bg(mode='day'){
+function bg(mode='day',real=false){
   const night=mode==='night', glow=mode==='glow', r=rnd(11);
   const sky=night?['#0a1330','#1f3a6e','#4a6aa0']:glow?['#3f86c8','#8fd8ff','#e6fbff']:['#4a86d4','#8cc8f5','#eaf7ff'];
   const mtn=night?['#1d3160','#16264d']:glow?['#8bbbe0','#6fa6d2']:['#86aad8','#6d9bcc'];
@@ -283,7 +296,7 @@ function bg(mode='day'){
   o+=`<path d="M0 190 L50 146 L110 178 L170 138 L235 180 L300 142 L360 176 L400 156 L400 200 L0 200Z" fill="${mtn[1]}" opacity=".9"/>`;
   for(let i=0;i<30;i++){ const x=i*14+r()*6-4, sc=.4+r()*.22; o+=`<polygon points="${x},${184-82*sc} ${x-26*sc},184 ${x+26*sc},184" fill="${sil}"/>`; }
   o+=`<ellipse cx="200" cy="192" rx="270" ry="14" fill="#fff" opacity="${night?.07:.3}"/>`;
-  o+=pine(36,170,1,c1,c2)+pine(92,178,.74,c1,c2)+pine(332,167,1.1,c1,c2)+pine(378,176,.8,c1,c2);
+  o+=real?fir(36,200,1.15,false,31)+fir(92,203,.8,false,32)+fir(332,198,1.25,false,33)+fir(378,203,.85,false,34):pine(36,170,1,c1,c2)+pine(92,178,.74,c1,c2)+pine(332,167,1.1,c1,c2)+pine(378,176,.8,c1,c2);
   o+=`<ellipse cx="200" cy="300" rx="400" ry="108" fill="url(#g${mode})"/>`;
   o+=`<path d="M182 262 Q196 222 212 197 L226 197 Q218 224 252 262Z" fill="${night?'#6b5a45':'#d4b98a'}" opacity=".7"/>`;
   const fc=['#ff8fb1','#ffd54f','#ffffff','#ce93d8'];
@@ -366,8 +379,224 @@ const ffly=(x,y,i)=>`<g data-act="firefly" data-i="${i}" transform="translate(${
   <ellipse cx="0" cy="4.6" rx="2.1" ry="3.4" fill="#d9ff5a" class="ffa" style="animation-delay:${i*-.5}s"/>
   <ellipse cx="-.5" cy="3.6" rx=".7" ry="1.3" fill="#fff" opacity=".7"/>
 </g></g>`;
+const star=(x,y,s=1,act='')=>`<g transform="translate(${x},${y}) scale(${s})" ${act}>
+  <circle r="86" fill="url(#starGlow)" class="pu" opacity=".75"/>
+  <ellipse rx="100" ry="2.8" fill="url(#streakG)" class="tw"/>
+  <ellipse rx="3" ry="46" fill="url(#streakV)" opacity=".55"/>
+  <g class="spin"><polygon points="0,-46 2,0 -2,0" fill="#fff6c8" opacity="0.95" transform="rotate(0)"/><polygon points="0,-30 2,0 -2,0" fill="#fff6c8" opacity="0.7" transform="rotate(30)"/><polygon points="0,-22 2,0 -2,0" fill="#fff6c8" opacity="0.5" transform="rotate(60)"/><polygon points="0,-46 2,0 -2,0" fill="#fff6c8" opacity="0.95" transform="rotate(90)"/><polygon points="0,-30 2,0 -2,0" fill="#fff6c8" opacity="0.7" transform="rotate(120)"/><polygon points="0,-22 2,0 -2,0" fill="#fff6c8" opacity="0.5" transform="rotate(150)"/><polygon points="0,-46 2,0 -2,0" fill="#fff6c8" opacity="0.95" transform="rotate(180)"/><polygon points="0,-30 2,0 -2,0" fill="#fff6c8" opacity="0.7" transform="rotate(210)"/><polygon points="0,-22 2,0 -2,0" fill="#fff6c8" opacity="0.5" transform="rotate(240)"/><polygon points="0,-46 2,0 -2,0" fill="#fff6c8" opacity="0.95" transform="rotate(270)"/><polygon points="0,-30 2,0 -2,0" fill="#fff6c8" opacity="0.7" transform="rotate(300)"/><polygon points="0,-22 2,0 -2,0" fill="#fff6c8" opacity="0.5" transform="rotate(330)"/></g>
+  <circle r="30" fill="url(#starCore)"/>
+  <circle r="11" fill="#fffbe6"/><circle r="5" fill="#fff"/>
+  <circle cx="44" cy="-22" r="4.5" fill="#ffd54f" opacity=".4"/><circle cx="62" cy="-31" r="2.6" fill="#ffe27a" opacity=".45"/><circle cx="-38" cy="19" r="3.4" fill="#ffd54f" opacity=".38"/>
+  <circle class="tw" cx="24" cy="-22" r="1.7" fill="#fff"/><circle class="tw" style="animation-delay:-1.2s" cx="-27" cy="16" r="1.3" fill="#fff6c8"/>
+</g>`;
+const starShape=(x,y,sc=1)=>{ let pts=''; for(let i=0;i<10;i++){ const a=-Math.PI/2+i*Math.PI/5, r=i%2?5.2:12.5; pts+=`${(Math.cos(a)*r).toFixed(1)},${(Math.sin(a)*r).toFixed(1)} `; }
+  return `<g transform="translate(${x},${y}) scale(${sc}) rotate(-18)"><circle r="22" fill="url(#starGlow)"/><polygon points="${pts}" fill="url(#starG)" stroke="#fff3b0" stroke-width="1" stroke-linejoin="round"/><circle cx="-2.4" cy="-3" r="1.6" fill="#fff" opacity=".85"/></g>`; };
+const snowCat=(x,y,s=1)=>`<g transform="translate(${x},${y}) scale(${s})" data-act="snowcat">
+  <path d="M18 42 Q56 50 50 6 Q45 32 22 36Z" fill="#fff" stroke="#cfe3f5" stroke-width="1"/><path d="M50 6 Q54 24 44 36 Q48 22 50 6Z" fill="#bfe3ff"/>
+  <ellipse cx="0" cy="32" rx="19" ry="21" fill="#fff" stroke="#d6e6f5" stroke-width="1"/>
+  <rect x="-10" y="48" width="7" height="10" rx="3" fill="#fff" stroke="#d6e6f5" stroke-width=".8"/><rect x="3" y="48" width="7" height="10" rx="3" fill="#fff" stroke="#d6e6f5" stroke-width=".8"/>
+  <ellipse cx="-6.5" cy="58" rx="6.4" ry="2.8" fill="#eef5fc"/><ellipse cx="6.5" cy="58" rx="6.4" ry="2.8" fill="#eef5fc"/>
+  <path d="M-15 19 Q0 28 15 19" stroke="#6fa8ff" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M8 24 L12 40 L19 36 L15 22Z" fill="#6fa8ff"/>
+  <path d="M-15 19 Q0 28 15 19" stroke="#a9ccff" stroke-width="1.4" fill="none" stroke-dasharray="3 4"/>
+  <polygon points="-19,-8 -16,-37 -3,-17" fill="#fff" stroke="#d6e6f5" stroke-width="1"/><polygon points="19,-8 16,-37 3,-17" fill="#fff" stroke="#d6e6f5" stroke-width="1"/>
+  <polygon points="-16,-13 -15,-29 -8,-17" fill="#bfe3ff"/><polygon points="16,-13 15,-29 8,-17" fill="#bfe3ff"/>
+  <circle cx="0" cy="-2" r="22" fill="#fff" stroke="#d6e6f5" stroke-width="1"/>
+  <path d="M-23 4 L-29 9 L-22 11Z M23 4 L29 9 L22 11Z" fill="#fff" stroke="#d6e6f5" stroke-width=".8"/>
+  <path d="M-5 -19 v6 M0 -21 v8 M5 -19 v6" stroke="#9fd3ff" stroke-width="2.4" stroke-linecap="round"/>
+  <ellipse cx="-9.5" cy="-1" rx="5.4" ry="6.4" fill="#8fd8ff"/><ellipse cx="9.5" cy="-1" rx="5.4" ry="6.4" fill="#8fd8ff"/>
+  <ellipse cx="-9.5" cy="0" rx="2.2" ry="4" fill="#173a66"/><ellipse cx="9.5" cy="0" rx="2.2" ry="4" fill="#173a66"/>
+  <circle cx="-8" cy="-3.6" r="2.1" fill="#fff"/><circle cx="11" cy="-3.6" r="2.1" fill="#fff"/><circle cx="-11" cy="3" r="1" fill="#fff"/><circle cx="8" cy="3" r="1" fill="#fff"/>
+  <path d="M-15.5 -4.6 Q-9.5 -11 -3.5 -4.6 M3.5 -4.6 Q9.5 -11 15.5 -4.6" stroke="#6f8fb5" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <polygon points="-2,7 2,7 0,10" fill="#ff9fb5"/><path d="M0 10 q-3 4 -6 2 M0 10 q3 4 6 2" stroke="#8aa4c4" fill="none" stroke-width="1.3"/>
+  <path d="M-22 6 h-13 M-22 10 l-12 4 M22 6 h13 M22 10 l12 4" stroke="#b3c8de" stroke-width="1"/>
+  <path class="tw" transform="translate(0,-31) scale(.8)" d="M0 -5 L1 -1 L5 0 L1 1 L0 5 L-1 1 L-5 0 L-1 -1Z" fill="#7fdcff"/>
+</g>`;
+const iceDragon=(x,y,s=1,sad=true)=>`<g transform="translate(${x},${y}) scale(${s})" data-act="dragon">
+  <path d="M16 44 Q52 54 47 16 Q43 36 20 38Z" fill="#8fd9f0"/><polygon points="41,28 47,16 49,30" fill="#e8fbff"/><polygon points="34,41 43,36 41,47" fill="#e8fbff"/>
+  <path d="M-12 28 Q-36 22 -33 40 Q-31 50 -14 46Z" fill="#c7efff" opacity=".95"/><path d="M-12 31 Q-26 29 -29 38" stroke="#eafaff" stroke-width="1.2" fill="none"/><path d="M12 28 Q36 22 33 40 Q31 50 14 46Z" fill="#c7efff" opacity=".95"/><path d="M12 31 Q26 29 29 38" stroke="#eafaff" stroke-width="1.2" fill="none"/>
+  <ellipse cx="0" cy="33" rx="17" ry="19" fill="#9fe0f5"/><ellipse cx="0" cy="37" rx="10" ry="14" fill="#e4f8ff"/>
+  <ellipse cx="-8" cy="53" rx="7.5" ry="3.2" fill="#8fd9f0"/><ellipse cx="8" cy="53" rx="7.5" ry="3.2" fill="#8fd9f0"/>
+  <polygon points="-11,-12 -15,-35 -3,-17" fill="#e8fbff"/><polygon points="11,-12 15,-35 3,-17" fill="#e8fbff"/><polygon points="-3,-18 0,-29 3,-18" fill="#bde9ff"/>
+  <circle r="19" fill="#9fe0f5"/><ellipse cx="0" cy="8" rx="12" ry="8.5" fill="#b9edfb"/>
+  <ellipse cx="-4" cy="6" rx="1.3" ry="1" fill="#5fa8c4"/><ellipse cx="4" cy="6" rx="1.3" ry="1" fill="#5fa8c4"/>
+  <ellipse cx="-9" cy="-3" rx="5" ry="6" fill="#fff"/><ellipse cx="9" cy="-3" rx="5" ry="6" fill="#fff"/>
+  <ellipse cx="-9" cy="-2" rx="3.4" ry="4.6" fill="#2b4a86"/><ellipse cx="9" cy="-2" rx="3.4" ry="4.6" fill="#2b4a86"/>
+  <circle cx="-8" cy="-4.4" r="1.7" fill="#fff"/><circle cx="10" cy="-4.4" r="1.7" fill="#fff"/>
+  <path d="M-14.2 -5.5 Q-9 -10.5 -3.8 -6" stroke="#1d2f5e" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M3.8 -6 Q9 -10.5 14.2 -5.5" stroke="#1d2f5e" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M-14 -6 l-1.7 -1 M-13 -8.4 l-1.3 -1.5 M14 -6 l1.7 -1 M13 -8.4 l1.3 -1.5" stroke="#1d2f5e" stroke-width="1.3" stroke-linecap="round"/>
+  <ellipse cx="-15" cy="6" rx="3.4" ry="2" fill="#ff9fb5" opacity=".6"/><ellipse cx="15" cy="6" rx="3.4" ry="2" fill="#ff9fb5" opacity=".6"/>
+  <path d="M-17 6 L-24 4 M-17 9 L-25 9.5 M-17 12 L-24 14.5 M17 6 L24 4 M17 9 L25 9.5 M17 12 L24 14.5" stroke="#4d7ea0" stroke-width="1.2" stroke-linecap="round"/>
+  ${sad?'<path d="M-14 -11 L-5 -14 M14 -11 L5 -14" stroke="#3b6a8f" stroke-width="1.8" stroke-linecap="round"/><path d="M-12 2 q-1.6 6 1 9" stroke="#6ec6ff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M-3 14 Q0 11.5 3 14" stroke="#4d7ea0" stroke-width="1.6" fill="none" stroke-linecap="round"/>':'<path d="M-14 -13 Q-9 -16 -5 -13 M5 -13 Q9 -16 14 -13" stroke="#3b6a8f" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M-4.5 11.5 Q0 17 4.5 11.5" stroke="#4d7ea0" stroke-width="1.8" fill="none" stroke-linecap="round"/>'}
+</g>`;
+const pineSnow=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})"><rect x="-4" y="6" width="8" height="22" fill="#5a4034"/>
+  <polygon points="0,-26 -36,14 36,14" fill="#2c6b57"/><polygon points="0,-26 -17,-6 -8,-9 0,-2 8,-9 17,-6" fill="#fff"/>
+  <polygon points="0,-50 -30,-2 30,-2" fill="#2c6b57"/><polygon points="0,-50 -14,-30 -6,-33 0,-26 6,-33 14,-30" fill="#fff"/>
+  <polygon points="0,-74 -23,-26 23,-26" fill="#2c6b57"/><polygon points="0,-74 -11,-52 -5,-55 0,-48 5,-55 11,-52" fill="#fff"/></g>`;
+const mountSnow=(x,peak,w,c)=>{ const h=205-peak; return `<polygon points="${x-w},205 ${x},${peak} ${x+w},205" fill="${c}"/><polygon points="${x},${peak} ${x-w*.3},${peak+h*.3} ${x-w*.12},${peak+h*.25} ${x},${peak+h*.36} ${x+w*.14},${peak+h*.26} ${x+w*.3},${peak+h*.3}" fill="#f4faff"/>`; };
+const peak=(x,top,w,seed,far)=>{
+  const r=rnd(seed), base=205, h=base-top, rb=x+(r()*20-10), sx=x+(r()*8-4);
+  const xL=x-w*(0.9+r()*.2), xR=x+w*(0.9+r()*.2);
+  const line=(ax,ay,bx,by,n,j)=>{ const a=[]; for(let i=1;i<n;i++){ const t=i/n; a.push([ax+(bx-ax)*t+(r()*2-1)*j, ay+(by-ay)*t+(r()*2-1)*j*.6]); } return a; };
+  const ls=line(sx,top,xL,base,6,6), rs=line(sx,top,xR,base,6,6), rp=line(sx,top,rb,base,5,4);
+  const P=a=>a.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+  const leftPoly=`${sx},${top} ${P(ls)} ${xL},${base} ${rb},${base} ${P([...rp].reverse())}`;
+  const rightPoly=`${sx},${top} ${P(rp)} ${rb},${base} ${xR},${base} ${P([...rs].reverse())}`;
+  const ys=top+h*(.34+r()*.1);
+  let sn=''; const n=14, x0=xL-12, x1=xR+12;
+  for(let i=0;i<=n;i++){ sn+=`${(x0+(x1-x0)*i/n).toFixed(1)},${(ys+(r()*18-6)).toFixed(1)} `; }
+  sn+=`${x1},${top-10} ${x0},${top-10}`;
+  let rocks=''; for(let i=0;i<9;i++){ const rx=xL+(xR-xL)*(.15+r()*.7), ry=ys+4; rocks+=`<polygon points="${(rx-2).toFixed(1)},${ry.toFixed(1)} ${(rx+2).toFixed(1)},${ry.toFixed(1)} ${(rx+(r()*12-6)).toFixed(1)},${(ry+30+r()*50).toFixed(1)}" fill="#33497a" opacity=".38"/>`; }
+  return `<g ${far?'opacity=".72"':''}><defs><clipPath id="cL${seed}"><polygon points="${leftPoly}"/></clipPath><clipPath id="cR${seed}"><polygon points="${rightPoly}"/></clipPath></defs>
+   <polygon points="${leftPoly}" fill="url(#mtL)"/><polygon points="${rightPoly}" fill="url(#mtR)"/>
+   <g clip-path="url(#cL${seed})">${rocks}<polygon points="${sn}" fill="#f7fbff"/></g>
+   <g clip-path="url(#cR${seed})">${rocks}<polygon points="${sn}" fill="#c9d9f2"/></g>
+   <polyline points="${sx},${top} ${P(rp)} ${rb},${base}" fill="none" stroke="#fff" stroke-width="1.1" opacity=".55"/>
+   <ellipse cx="${x}" cy="${base}" rx="${(w*1.15).toFixed(0)}" ry="10" fill="#dcebff" opacity=".45"/></g>`;
+};
+const fir=(x,y,s,snow,seed)=>{
+  const r=rnd(seed);
+  const cL=snow?'#2f7d62':'#256049', cR=snow?'#1d5645':'#17432f';
+  const f=a=>a.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+  let o=`<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="3" rx="${snow?34:30}" ry="5" fill="#000" opacity=".22"/>
+   <polygon points="-5,6 5,6 3.4,-14 -3.4,-14" fill="#4a352a"/><polygon points="0,6 5,6 3.4,-14 0,-14" fill="#35261e"/><path d="M-2 4 L-2.4 -12 M1.5 5 L1.8 -12" stroke="#2a1d17" stroke-width=".8"/>`;
+  for(let k=7;k>=0;k--){
+    const ya=-94+k*10.5, h=20+k, yb=ya+h, w=6+k*4.4, n=6;
+    const bx=[]; for(let i=1;i<n;i++){ bx.push([-w+2*w*i/n, yb-2+(i%2?4:-1)+r()*2.5]); }
+    const dr=3+r()*3, mid=[0,yb+1+r()];
+    const Lp=[[0,ya],[-w,yb+dr],...bx.filter(q=>q[0]<0),mid];
+    const Rp=[[0,ya],mid,...bx.filter(q=>q[0]>=0),[w,yb+dr]];
+    o+=`<polygon points="${f(Lp)}" fill="${cL}"/><polygon points="${f(Rp)}" fill="${cR}"/>`;
+    o+=`<path d="M${(-w*.8).toFixed(1)} ${(yb-1).toFixed(1)} Q${(-w*.4).toFixed(1)} ${(yb-8).toFixed(1)} 0 ${(ya+h*.55).toFixed(1)}" stroke="#143a2c" stroke-width=".8" fill="none" opacity=".5"/>`;
+    if(snow){
+      const sy=ya+h*.5, sp=[]; for(let i=1;i<5;i++){ sp.push([-w*.62+1.24*w*i/5, sy+(i%2?3:-1)+r()*2.5]); }
+      const SL=[[0,ya],[-w*.62,sy+2],...sp.filter(q=>q[0]<0),[0,sy+2]], SR=[[0,ya],[0,sy+2],...sp.filter(q=>q[0]>=0),[w*.62,sy+2]];
+      o+=`<polygon points="${f(SL)}" fill="#f7fbff"/><polygon points="${f(SR)}" fill="#cfe0f4"/>`;
+    }
+  }
+  return o+'</g>';
+};
+function bgSnow(){
+  const r=rnd(5);
+  let o=`<defs>
+   <linearGradient id="kSnow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16294f"/><stop offset=".5" stop-color="#4b6fa8"/><stop offset="1" stop-color="#cfe6ff"/></linearGradient>
+   <linearGradient id="gSnow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6fbff"/><stop offset="1" stop-color="#b6d2ec"/></linearGradient>
+   <linearGradient id="auro" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6fffd0" stop-opacity="0"/><stop offset=".4" stop-color="#6fffd0" stop-opacity=".5"/><stop offset=".7" stop-color="#a98cff" stop-opacity=".45"/><stop offset="1" stop-color="#a98cff" stop-opacity="0"/></linearGradient>
+   <linearGradient id="mtL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7fbff"/><stop offset=".45" stop-color="#a9c2e6"/><stop offset="1" stop-color="#6f8ec4"/></linearGradient>
+   <linearGradient id="mtR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7e3f6"/><stop offset=".45" stop-color="#7790c2"/><stop offset="1" stop-color="#3d5588"/></linearGradient>
+   <radialGradient id="vSnow" cx=".5" cy=".5" r=".75"><stop offset=".65" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#0a1830" stop-opacity=".3"/></radialGradient></defs>
+   <rect width="400" height="260" fill="url(#kSnow)"/>`;
+  for(let i=0;i<34;i++) o+=`<circle class="tw" style="animation-delay:-${(i%7)*.4}s" cx="${r()*400}" cy="${r()*90}" r="${.6+r()*1.1}" fill="#fff"/>`;
+  o+=`<path d="M0 78 Q90 30 190 74 T400 58 L400 118 Q300 92 200 116 T0 106Z" fill="url(#auro)" class="tw"/>`;
+  o+=peak(0,128,95,11,true)+peak(135,112,100,12,true)+peak(272,118,95,13,true)+peak(395,112,90,14,true);
+  o+=`<ellipse cx="200" cy="204" rx="320" ry="20" fill="#e4f0ff" opacity=".4"/>`;
+  o+=peak(70,94,118,21,false)+peak(205,66,138,22,false)+peak(340,86,126,23,false);
+  o+=`<ellipse cx="200" cy="200" rx="280" ry="14" fill="#fff" opacity=".28"/>`;
+  o+=fir(30,200,1.0,true,41)+fir(82,204,.7,true,42)+fir(350,198,1.1,true,43)+fir(388,204,.75,true,44);
+  o+=`<ellipse cx="200" cy="300" rx="420" ry="108" fill="url(#gSnow)"/>`;
+  o+=`<ellipse cx="70" cy="226" rx="60" ry="10" fill="#fff" opacity=".7"/><ellipse cx="320" cy="238" rx="80" ry="12" fill="#fff" opacity=".7"/>`;
+  for(let i=0;i<46;i++) o+=`<circle class="sn" style="animation-duration:${(5+r()*5).toFixed(1)}s;animation-delay:-${(r()*8).toFixed(1)}s" cx="${(r()*400).toFixed(0)}" cy="0" r="${(1.2+r()*1.8).toFixed(1)}" fill="#fff" opacity=".9"/>`;
+  o+=`<rect width="400" height="260" fill="url(#vSnow)"/>`;
+  return o;
+}
+const icePalace=(x,y,s,open)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <defs>
+    <linearGradient id="iceL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2fcff"/><stop offset=".5" stop-color="#b4e2ff"/><stop offset="1" stop-color="#7fbdf0"/></linearGradient>
+    <linearGradient id="iceR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdeaff"/><stop offset=".5" stop-color="#86bff0"/><stop offset="1" stop-color="#4f8cd0"/></linearGradient>
+    <radialGradient id="iceAura"><stop offset="0" stop-color="#bfe9ff" stop-opacity=".55"/><stop offset="1" stop-color="#bfe9ff" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="0" cy="-90" rx="135" ry="115" fill="url(#iceAura)"/>
+  <ellipse cx="0" cy="4" rx="112" ry="9" fill="#27487a" opacity=".38"/>
+  <path d="M-112 5 L-98 -14 L-72 -8 L-42 -24 L-12 -12 L20 -26 L52 -10 L84 -22 L110 -4 L114 5Z" fill="#46689a"/>
+  <path d="M-98 -14 L-72 -8 L-62 -17Z M20 -26 L52 -10 L36 -13Z M-42 -24 L-12 -12 L-26 -20Z" fill="#7a9bc8"/>
+  <path d="M-72 -8 L-42 -24 L-12 -12 L20 -26 L52 -10 L84 -22" stroke="#e6f6ff" stroke-width="2.4" fill="none" stroke-linejoin="round" opacity=".7"/>
+  <polygon points="-50,-6 -50,-72 -26,-72 -26,-6" fill="url(#iceL)"/><polygon points="26,-6 26,-72 50,-72 50,-6" fill="url(#iceR)"/>
+  <path d="M-50 -72 h4 v-5 h5 v5 h5 v-5 h5 v5 h5 M26 -72 h4 v-5 h5 v5 h5 v-5 h5 v5 h5" fill="none" stroke="#e8f7ff" stroke-width="2"/>
+  <polygon points="-92,-6 -92,-96 -70,-102 -70,-6" fill="url(#iceL)"/><polygon points="-70,-6 -70,-102 -48,-96 -48,-6" fill="url(#iceR)"/>
+  <polygon points="-96,-96 -70,-158 -70,-98" fill="#d9f2ff"/><polygon points="-70,-158 -44,-96 -70,-98" fill="#6fa6dc"/>
+  <polygon points="48,-6 48,-84 70,-90 70,-6" fill="url(#iceL)"/><polygon points="70,-6 70,-90 92,-84 92,-6" fill="url(#iceR)"/>
+  <polygon points="44,-84 70,-142 70,-88" fill="#d9f2ff"/><polygon points="70,-142 96,-84 70,-88" fill="#6fa6dc"/>
+  <polygon points="-27,-6 -27,-122 0,-134 0,-6" fill="url(#iceL)"/><polygon points="0,-6 0,-134 27,-122 27,-6" fill="url(#iceR)"/>
+  <polygon points="-31,-120 0,-204 0,-122" fill="#e4f7ff"/><polygon points="0,-204 31,-120 0,-122" fill="#74aadf"/>
+  <polygon points="-27,-122 -40,-152 -31,-120" fill="#cfeeff"/><polygon points="27,-122 40,-148 31,-120" fill="#8ec3f2"/><polygon points="-84,-98 -96,-126 -90,-96" fill="#cfeeff"/><polygon points="84,-86 94,-114 90,-84" fill="#8ec3f2"/>
+  <path d="M0 -204 L-31 -120 M-70 -158 L-96 -96 M70 -142 L44 -84 M-27 -122 L-27 -8 M-70 -102 L-70 -8" stroke="#fff" stroke-width="1.6" fill="none" opacity=".75"/>
+  <path d="M0 -204 L31 -120 M70 -142 L96 -84" stroke="#3f78b8" stroke-width="1.2" fill="none" opacity=".6"/>
+  <g fill="#ffe9a8"><path d="M-18 -78 v-20 q6 -9 12 0 v20Z"/><path d="M-80 -60 v-16 q5 -8 10 0 v16Z"/><path d="M-80 -34 v-14 q5 -7 10 0 v14Z"/><path d="M-37 -50 v-12 q4 -7 8 0 v12Z"/></g>
+  <g fill="#ffd27a"><path d="M6 -78 v-20 q6 -9 12 0 v20Z"/><path d="M58 -50 v-16 q5 -8 10 0 v16Z"/><path d="M76 -38 v-14 q5 -7 10 0 v14Z"/><path d="M33 -50 v-12 q4 -7 8 0 v12Z"/></g>
+  <g fill="#f4fbff" opacity=".95"><polygon points="-48,-72 -45,-60 -42,-72"/><polygon points="-40,-72 -38,-63 -36,-72"/><polygon points="-33,-72 -31,-58 -28,-72"/><polygon points="28,-72 31,-61 34,-72"/><polygon points="36,-72 38,-64 40,-72"/><polygon points="44,-72 47,-57 50,-72"/><polygon points="-90,-96 -88,-84 -85,-96"/><polygon points="-62,-100 -60,-90 -57,-98"/><polygon points="52,-87 54,-77 57,-86"/><polygon points="80,-86 83,-74 86,-84"/></g>
+  <g fill="url(#iceL)" stroke="#e8f7ff" stroke-width=".8"><polygon points="-108,5 -100,-24 -92,5"/><polygon points="-98,5 -90,-16 -84,5"/></g><g fill="url(#iceR)" stroke="#e8f7ff" stroke-width=".8"><polygon points="92,5 102,-22 110,5"/><polygon points="104,5 110,-12 116,5"/></g>
+  <path d="M-30 -2 Q-34 -12 -28 -16 M30 -2 Q34 -10 28 -14" stroke="#fff" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>
+  <path d="M-15 -6 L-15 -34 Q0 -56 15 -34 L15 -6Z" fill="${open?'#ffe9a8':'#7fb8e8'}" stroke="#eaf8ff" stroke-width="1.6"/>
+  ${open?'<path d="M-15 -6 L-15 -34 Q0 -56 15 -34 L15 -6Z" fill="#fff3c4" opacity=".75" class="pu"/><path d="M-15 -6 L-28 -10 L-28 -36 L-15 -34Z M15 -6 L28 -10 L28 -36 L15 -34Z" fill="#bfe0fa" stroke="#eaf8ff" stroke-width="1"/><ellipse cx="0" cy="2" rx="22" ry="4" fill="#ffe9a8" opacity=".6"/>':'<path d="M0 -42 L0 -6 M-15 -22 L15 -22 M-9 -30 L-3 -24 L-8 -16 M8 -32 L4 -24 L10 -16" stroke="#e8f6ff" stroke-width="1.3" fill="none"/><path class="tw" transform="translate(0,-22) scale(1.3)" d="M0 -6 L1.4 -1.4 L6 0 L1.4 1.4 L0 6 L-1.4 1.4 L-6 0 L-1.4 -1.4Z" fill="#fff"/>'}
+  <path class="tw" transform="translate(0,-208) scale(1.1)" d="M0 -7 L1.6 -1.6 L7 0 L1.6 1.6 L0 7 L-1.6 1.6 L-7 0 L-1.6 -1.6Z" fill="#fff"/>
+  <path class="tw" style="animation-delay:-1s" transform="translate(-70,-162) scale(.8)" d="M0 -6 L1.4 -1.4 L6 0 L1.4 1.4 L0 6 L-1.4 1.4 L-6 0 L-1.4 -1.4Z" fill="#fff"/>
+  <path class="tw" style="animation-delay:-2s" transform="translate(70,-146) scale(.8)" d="M0 -6 L1.4 -1.4 L6 0 L1.4 1.4 L0 6 L-1.4 1.4 L-6 0 L-1.4 -1.4Z" fill="#fff"/>
+</g>`;
+const iceHall=()=>{
+  const r=rnd(23);
+  let o=`<defs>
+    <linearGradient id="hallG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#091a3b"/><stop offset=".55" stop-color="#1d4a82"/><stop offset="1" stop-color="#4f8fc8"/></linearGradient>
+    <radialGradient id="hGlow" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#bfe8ff" stop-opacity=".7"/><stop offset=".5" stop-color="#6fb4ee" stop-opacity=".25"/><stop offset="1" stop-color="#6fb4ee" stop-opacity="0"/></radialGradient>
+    <linearGradient id="flrG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9d8f8"/><stop offset=".5" stop-color="#5c9bd8"/><stop offset="1" stop-color="#2c5f9c"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6f7ff" stop-opacity=".5"/><stop offset="1" stop-color="#e6f7ff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="pilG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e2f5ff" stop-opacity=".78"/><stop offset=".5" stop-color="#8ec8f5" stop-opacity=".45"/><stop offset="1" stop-color="#4f8fd0" stop-opacity=".72"/></linearGradient>
+    <clipPath id="hFl"><rect y="206" width="400" height="54"/></clipPath>
+    <radialGradient id="hVig" cx=".5" cy=".5" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#050f24" stop-opacity=".5"/></radialGradient></defs>
+    <rect width="400" height="260" fill="url(#hallG)"/><rect width="400" height="260" fill="url(#hGlow)"/>`;
+  for(let j=0;j<5;j++) for(let i=0;i<8;i++){
+    const x=i*50, y=j*42;
+    const c1=`hsl(${208+((r()*14-7)|0)},${55+((r()*20)|0)}%,${30+((r()*26)|0)}%)`, c2=`hsl(${208+((r()*14-7)|0)},${55+((r()*20)|0)}%,${26+((r()*26)|0)}%)`;
+    o+=`<polygon points="${x},${y} ${x+50},${y} ${x},${y+42}" fill="${c1}" opacity=".5"/><polygon points="${x+50},${y} ${x+50},${y+42} ${x},${y+42}" fill="${c2}" opacity=".5"/>`;
+  }
+  o+=`<rect y="196" width="400" height="12" fill="#1b4478" opacity=".45"/>`;
+  for(let i=0;i<30;i++){ const x=i*13.8+r()*6, h=8+r()*16; o+=`<polygon points="${x-3},0 ${x+3},0 ${x},${h}" fill="#bfe4ff" opacity=".4"/>`; }
+  o+=`<polygon points="150,0 196,0 268,206 118,206" fill="url(#beam)" opacity=".5"/><polygon points="236,0 262,0 330,206 262,206" fill="url(#beam)" opacity=".35"/><polygon points="70,0 90,0 120,206 60,206" fill="url(#beam)" opacity=".3"/>`;
+  const pil=[26,112,288,374];
+  const pilGroup=pil.map(x=>`<polygon points="${x-16},222 ${x-10},46 ${x},22 ${x+10},46 ${x+16},222" fill="url(#pilG)" stroke="#e8f8ff" stroke-width="1"/><path d="M${x-6} 218 L${x-4} 50 M${x+5} 214 L${x+4} 56" stroke="#fff" stroke-width="1.3" opacity=".55"/><path d="M${x-10} 46 L${x} 22 L${x+10} 46 M${x-13} 120 L${x+13} 120 M${x-15} 180 L${x+15} 180" stroke="#cfeeff" stroke-width=".8" fill="none" opacity=".5"/>`).join('');
+  o+=pilGroup;
+  for(let i=0;i<18;i++){ const x=8+i*22.6+r()*6, h=14+r()*22; o+=`<polygon points="${x-5},0 ${x+5},0 ${x},${h}" fill="#dff3ff" opacity=".9"/><path d="M${x-2} 1 L${x} ${h-3}" stroke="#fff" stroke-width="1" opacity=".8"/>`; }
+  o+=`<path d="M200 0 V30" stroke="#cfeeff" stroke-width="1.4"/><ellipse cx="200" cy="30" rx="26" ry="4" fill="none" stroke="#e8f8ff" stroke-width="1.6"/>`;
+  [-22,-13,-4,5,14,23].forEach((dx,i)=>{ const hh=14+(i%3)*7; o+=`<g class="tw" style="animation-delay:-${i*.4}s"><polygon points="${200+dx},31 ${200+dx-4},${31+hh*.55} ${200+dx},${31+hh} ${200+dx+4},${31+hh*.55}" fill="#e9f8ff" stroke="#fff" stroke-width=".7"/></g>`; });
+  o+=`<circle cx="200" cy="40" r="26" fill="url(#hGlow)"/>`;
+  o+=`<rect y="206" width="400" height="54" fill="url(#flrG)"/><path d="M0 206 H400" stroke="#e8f8ff" stroke-width="1.6" opacity=".7"/>`;
+  o+=`<g clip-path="url(#hFl)"><g transform="translate(0,412) scale(1,-1)" opacity=".22">${pilGroup}</g></g>`;
+  o+=`<path d="M30 226 L82 240 L128 232 L170 248 M250 228 L300 240 L350 230 M200 214 L214 236" stroke="#dff3ff" stroke-width="1" fill="none" opacity=".4"/>`;
+  o+=`<ellipse cx="200" cy="232" rx="150" ry="10" fill="#d9f2ff" opacity=".18"/>`;
+  for(let i=0;i<26;i++) o+=`<circle class="tw" style="animation-delay:-${(i%7)*.45}s" cx="${(r()*400).toFixed(0)}" cy="${(30+r()*220).toFixed(0)}" r="${(.8+r()*1.4).toFixed(1)}" fill="#eefaff"/>`;
+  o+=`<rect width="400" height="260" fill="url(#hVig)"/>`;
+  return o;
+};
+/* kar kıyafeti: kalın mont, atkı, eldiven, kürklü bot */
+const winterGear=(coat,dark,scarf,mitt,both)=>`
+  <ellipse cx="-5.5" cy="-26" rx="7.4" ry="3.3" fill="#fff"/><ellipse cx="5.5" cy="-26" rx="7.4" ry="3.3" fill="#fff"/>
+  <path d="M-16.5 -103 L16.5 -103 L20 -52 L-20 -52Z" fill="${coat}"/>
+  <path d="M-14 -91 Q0 -87 14 -91 M-16 -77 Q0 -73 16 -77 M-18 -63 Q0 -59 18 -63" stroke="${dark}" stroke-width="1.6" fill="none"/>
+  <path d="M0 -102 L0 -52" stroke="${dark}" stroke-width="1.4"/>
+  <circle cx="0" cy="-88" r="1.5" fill="#fff"/><circle cx="0" cy="-74" r="1.5" fill="#fff"/><circle cx="0" cy="-60" r="1.5" fill="#fff"/>
+  <path d="M-14 -99 Q-26 -82 -23 -64" stroke="${coat}" stroke-width="8.5" fill="none" stroke-linecap="round"/>
+  <circle cx="-24" cy="-60" r="5" fill="${mitt}"/><path d="M-28 -66 Q-24 -69 -20 -66" stroke="#fff" stroke-width="2" fill="none"/>
+  ${both?`<path d="M14 -99 Q26 -82 23 -64" stroke="${coat}" stroke-width="8.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="-60" r="5" fill="${mitt}"/><path d="M20 -66 Q24 -69 28 -66" stroke="#fff" stroke-width="2" fill="none"/>`:''}
+  <ellipse cx="0" cy="-102" rx="17" ry="5" fill="#fff"/>
+  <path d="M-13 -104 Q0 -96 13 -104" stroke="${scarf}" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M-13 -104 Q0 -96 13 -104" stroke="#fff" stroke-width="1.4" fill="none" stroke-dasharray="3 4"/>
+  <path d="M6 -100 L10 -76 L18 -78 L14 -100Z" fill="${scarf}"/><path d="M10 -76 L18 -78" stroke="#fff" stroke-width="2"/>
+`;
+const gearOver=(x,y,sc,g)=>`<g transform="translate(${x},${y}) scale(${sc*1.2})">${g}</g>`;
+const yunaW=(x,y,sc=1)=> IMG.yuna ? yuna(x,y,sc) : yuna(x,y,sc)+gearOver(x,y,sc,winterGear('#7fb8f0','#5a96d6','#ffd54f','#ffd54f',true));
+const nohaW=(x,y,sc=1,sad=true,tat=true)=> (IMG.noha||IMG.noha_uzgun) ? noha(x,y,sc,sad,tat) : nohaSvg(x,y,sc,sad,tat,true)+gearOver(x,y,sc,winterGear('#a58af0','#7f62d6','#4fc3f7','#4fc3f7',true));
+const misoGear=`<path d="M-9 -14 Q-10 -28 0 -28 Q10 -28 9 -14Z" fill="#7fb8f0"/><path d="M-4 -26 L-5 -15 M1 -28 L1 -15 M6 -26 L5 -15" stroke="#fff" stroke-width="1.4" opacity=".8"/>
+  <rect x="-10.5" y="-17" width="21" height="5.5" rx="2.6" fill="#fff"/><path d="M-8 -14 h16" stroke="#dbe9f7" stroke-width="1" stroke-dasharray="2 2"/>
+  <circle cx="0" cy="-30" r="4.4" fill="#fff"/><circle cx="-1.2" cy="-31.2" r="1.3" fill="#eaf4ff"/>
+  <g transform="translate(-9,29)"><path d="M0 -5 V5 M-4.3 -2.5 L4.3 2.5 M-4.3 2.5 L4.3 -2.5" stroke="#bfe6ff" stroke-width="1.5" stroke-linecap="round"/><circle r="1.4" fill="#fff"/></g>
+  <g fill="#fff" opacity=".95"><circle cx="-15" cy="-5" r="1.3"/><circle cx="16" cy="3" r="1.1"/><circle cx="-4" cy="-20" r="1"/><circle cx="6" cy="10" r="1"/><circle cx="-18" cy="10" r="1.2"/></g>`;
+const misoBlueSvg=(x,y,sc=1)=>misoSvg(x,y,sc)
+  .replace('stroke="#ff4f78"','stroke="#3f8fe8"')
+  .replace('fill="#ffd54f" stroke="#e0a800"','fill="#ffffff" stroke="#9fc2ea"').replace('stroke="#a87800"','stroke="#7aa3d1"')
+  .replace(/#ff8fb1/g,'#7fb8f0').replace('#ff6a97','#4f8fd8').replace('fill="#ff5c8a"','fill="#ffffff"')
+  .replace('fill="#ff6fa3" stroke="#ffe3ee"','fill="#ffffff" stroke="#9fd0ff"');
+const misoB=(x,y,sc=1)=> IMG.miso ? miso(x,y,sc) : misoBlueSvg(x,y,sc);
+const misoW=(x,y,sc=1)=> IMG.miso ? miso(x,y,sc) : misoBlueSvg(x,y,sc)+`<g transform="translate(${x},${y}) scale(${sc})" data-act="meow">${misoGear}</g>`;
 /* ---------- SAYFALAR ---------- */
-let state = {flies:0, solved:false, tattoo:false, bloom:false};
+let state = {flies:0, solved:false, tattoo:false, bloom:false, looked:false, cat:false, ice:false, back:false};
 const pages = [
  { // 0 kapak
   s:()=> bg('day')+yuna(130,238,.95)+mina(235,178,1,false).replace('<g ','<g data-act="howl" ')+sparkle(60,50)+sparkle(300,90,1.4)+sparkle(190,40),
@@ -425,9 +654,55 @@ const pages = [
     +yuna(95,242,.8)+noha(165,242,.82,false,true)+mina(245,185,.7)+miso(290,200,.8)
     +`<g data-act="optcas"><g transform="translate(205,50)">${gem(0,0,.95)}</g></g>`,
   t:()=>state.bloom
-    ?`OPTCAS'ı büyülü ormana geri bıraktılar. Doğayı kontrol etme gücüyle çiçekler açtı, orman yeniden masmavi parladı. 🌸<br><b>SON</b> 💙`
+    ?`OPTCAS'ı büyülü ormana geri bıraktılar. Doğayı kontrol etme gücüyle çiçekler açtı, orman yeniden masmavi parladı. 🌸<br>Ama o gece, gökyüzünde garip bir şey oldu... ✨`
     :`İşleri bitince OPTCAS'ı büyülü ormana geri bıraktılar. Hadi, OPTCAS'ın gücünü sen kullan!`,
-  h:()=>state.bloom?'':'👆 OPTCAS\'a dokun!'}
+  h:()=>state.bloom?"👆 İleri'ye bas, macera sürüyor!":'👆 OPTCAS\'a dokun!',
+  lock:()=>!state.bloom}
+ ,{ // 9 Çalınan yıldız
+  s:()=>bg('night',true)
+    +`<g data-act="gap"><circle cx="205" cy="52" r="26" fill="none" stroke="#ffd54f" stroke-width="2" stroke-dasharray="4 4" class="tw"/><text x="205" y="63" text-anchor="middle" font-size="30" fill="#ffd54f" class="tw">?</text></g>`
+    +yuna(95,242,.8)+noha(160,242,.8,false,true)+mina(235,188,.72,true)+misoB(305,205,.8),
+  t:()=>state.looked
+    ?`Yuna dikkatle baktı. Yıldızın kayboluş izi <b>karlı dağlara</b> doğru gidiyordu! <b>"Hadi yola çıkalım!"</b> dedi.`
+    :`<b>2. Macera: Çalınan Yıldız ⭐</b><br>Bir gece gökyüzündeki en parlak yıldız bir anda kayboldu! Orman karanlıkta kaldı, OPTCAS'ın ışığı bile solmaya başladı.`,
+  h:()=>state.looked?'':'👆 Gökyüzündeki boşluğa dokun!',
+  lock:()=>!state.looked},
+ { // 10 Karlı dağlara yolculuk
+  s:()=>bgSnow()+yunaW(90,244,.82)+nohaW(160,244,.82,false,true)+mina(230,196,.7)+misoW(300,208,.8),
+  t:()=>`Hepsi birlikte karlı dağlara yola çıktı. Rüzgâr çok soğuktu ama OPTCAS'ın mavi ışığı yollarını aydınlatıyordu. ❄️`,
+  h:'👆 Karlara dokun, kartopu atsın!', tapAny:'❄️'},
+ { // 11 Kar kedisi
+  s:()=>bgSnow()+yunaW(75,244,.78)+nohaW(130,244,.78,false,true)+mina(178,200,.62)+snowCat(258,205,1.15)+misoW(335,212,.8),
+  t:()=>state.cat
+    ?`<b>"Yıldızı gördüm!"</b> dedi Luna. <b>"Buz Sarayı'na götürdüler. Benimle gelin, yolu ben biliyorum."</b> Miso hemen yeni arkadaşı Luna'ya koştu. 🐱❄️`
+    :`Karların arasından bembeyaz tüylü, buz mavisi gözlü bir <b>kar kedisi</b> çıktı! Adı <b>Luna</b>'ydı. Yuna ile arkadaşlarına merakla baktı.`,
+  h:()=>state.cat?'':'👆 Kar kedisine dokun!',
+  lock:()=>!state.cat},
+ { // 12 Buz kapısı
+  s:()=>bgSnow()+icePalace(282,210,.98,state.ice)+yunaW(48,244,.72)+nohaW(92,244,.72,false,true)+snowCat(136,216,.8)+mina(172,214,.55)+misoW(212,234,.62),
+  t:()=>state.ice
+    ?`Yuna kapıya sımsıkı sarıldı ve buzlar eridi! <b>"Sıcacık bir sarılma"</b> ipucunun cevabıydı. Kapı gıcırdayarak açıldı. 🤗`
+    :`Buz Sarayı'nın kapısı kapalıydı. Üstünde şöyle yazıyordu:<br><i>"Beni sıcacık bir şey eritir."</i><br>Sence kapıyı ne açar?`,
+  x:()=>state.ice?'':`<button class="ch" onclick="guess2(0)">⛄ Kartopu</button><button class="ch" onclick="guess2(1)">🤗 Sarılmak</button><button class="ch" onclick="guess2(2)">🧊 Buz küpü</button>`,
+  lock:()=>!state.ice},
+ { // 13 Buz ejderhası
+  s:()=>iceHall()+yunaW(65,244,.78)+nohaW(115,244,.78,false,true)+mina(160,206,.6)+snowCat(200,218,.8)+misoW(247,233,.66)+iceDragon(305,206,1.2,true)+star(262,138,.75,''),
+  t:()=>`Sarayın ortasında minik bir buz ejderhası titriyordu. Adı <b>Lucas</b>'tı. Yıldızı o almıştı! <b>"Çok üşüyordum... yıldız sıcacıktı"</b> dedi, gözlerinden yaşlar süzüldü. 🥺`,
+  h:'👆 Ejderhaya dokun!'},
+ { // 14 Sarılma ve yıldız
+  s:()=>iceHall()+yunaW(58,244,.78)+nohaW(108,244,.78,false,true)+mina(150,210,.6)+snowCat(190,218,.8)+misoW(232,224,.8)+iceDragon(305,206,1.2,false)+star(305,118,.95,'data-act="star"'),
+  t:()=>state.back
+    ?`Yıldız Lucas'ın elinden Yuna'nın avucuna süzüldü. <b>"Artık yalnız değilsin Lucas, bizimle gel!"</b> dedi Yuna. 💛`
+    :`Hepsi Lucas'a sımsıkı sarıldı: Mina tüyleriyle ısıttı, Miso mırıldadı, Luna yanına kıvrıldı. Lucas ilk kez gülümsedi ve yıldızı yukarı bıraktı!`,
+  h:()=>state.back?'':'👆 Parlayan yıldıza dokun!',
+  lock:()=>!state.back},
+ { // 15 Gökyüzüne dönüş, son
+  s:()=>bg('night',true)+`<rect x="0" y="0" width="400" height="110" fill="transparent" data-act="wish"/>`+star(200,52,1.1,'')
+    +`<g class="shoot"><polygon points="130,56 36,14 40,22" fill="url(#trailG)"/>${starShape(130,56,1.1)}</g>`
+    +yuna(70,242,.8)+noha(128,242,.8,false,true)+mina(182,190,.7)+misoB(232,208,.8)+snowCat(288,208,.88)+iceDragon(354,208,.95,false),
+  t:()=>`Yıldızı gökyüzündeki yerine geri koydular. Orman yeniden ışıl ışıl oldu, OPTCAS bir daha masmavi parladı. Lucas ile Luna da hem onların hem birbirlerinin arkadaşı oldu.<br><b>SON</b> 💙`,
+  h:'👆 Gökyüzüne dokun, dilek tut!'}
+
 ];
 
 /* ---------- MOTOR ---------- */
@@ -461,6 +736,7 @@ function guess(i){
   if(i===1){ state.solved=true; chime(); setTimeout(chime,250); say(); }
   else $('hint').textContent = i===0 ? '🕳️ Orası karanlık! OPTCAS karanlığı sevmez. Tekrar dene.' : '🪵 Orası kuru! OPTCAS suyu sever. Tekrar dene.';
 }
+function guess2(i){ pop(); if(i===1){ state.ice=true; chime(); setTimeout(chime,250); say(); } else $('hint').textContent = i===0 ? '⛄ Kartopu da soğuk! Daha sıcak bir şey bul.' : '🧊 Buz küpü kapıyı eritemez! Tekrar dene.'; }
 $('scene').addEventListener('click', e=>{
   startMusic();
   const el = e.target.closest('[data-act]'); const p = pages[cur];
@@ -470,6 +746,11 @@ $('scene').addEventListener('click', e=>{
     else if(a==='meow'){ meow(); floatHeart(e,'🐱'); floatHeart({clientX:e.clientX+14,clientY:e.clientY},'💛'); }
     else if(a==='firefly'){ if(!el.dataset.on){ el.dataset.on=1; el.classList.add('on'); chime(); state.flies++; if(state.flies>=5){ setTimeout(say,200);} else $('hint').textContent=`👆 Ateş böceklerine dokun (${state.flies}/5)`; } }
     else if(a==='tattoo'){ if(!state.tattoo){ state.tattoo=true; chime(); meow(); say(); } }
+    else if(a==='gap'){ if(!state.looked){ state.looked=true; chime(); say(); } }
+    else if(a==='snowcat'){ meow(); floatHeart(e,'❄️'); if(!state.cat){ state.cat=true; chime(); say(); } }
+    else if(a==='dragon'){ pop(); floatHeart(e,'💙'); }
+    else if(a==='star'){ if(!state.back){ state.back=true; chime(); setTimeout(chime,250); setTimeout(()=>tone(1568,.6,'sine',.12),500); say(); } }
+    else if(a==='wish'){ floatHeart(e,'⭐'); chime(); }
     else if(a==='optcas'){ if(!state.bloom){ state.bloom=true; chime(); setTimeout(chime,200); setTimeout(()=>tone(1568,.6,'sine',.12),400); say(); } }
     return;
   }
